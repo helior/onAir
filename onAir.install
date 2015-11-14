@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function onAir_install() {
+  module_enable(array(
+    'navbar'
+  ));
+}

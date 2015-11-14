@@ -1,2 +1,2 @@
 ## OnAir!
-A podcaster platform made with ♥.
+A podcasting platform made with ♥.
