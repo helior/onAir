@@ -4,6 +4,7 @@ package = onAir
 version = 7.x-1.0
 dependencies[] = entityreference
 dependencies[] = features
+dependencies[] = onair_network
 dependencies[] = onair_references
 dependencies[] = options
 features[features_api][] = api:2

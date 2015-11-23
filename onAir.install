@@ -5,6 +5,10 @@
  */
 function onAir_install() {
   module_enable(array(
-    'navbar'
+    'navbar',
+    'onair_episode',
+    
+    // Development
+    'field_ui'
   ));
 }

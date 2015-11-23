@@ -5,6 +5,7 @@ version = 7.x-1.0
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = list
+dependencies[] = onair_podcast
 dependencies[] = onair_references
 dependencies[] = options
 dependencies[] = text
