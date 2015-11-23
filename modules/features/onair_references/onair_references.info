@@ -6,6 +6,7 @@ dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = taxonomy
 features[features_api][] = api:2
+features[field_base][] = field_ref_network
 features[field_base][] = field_ref_podcast
 features[taxonomy][] = tags
 project path = profiles/onAir/modules/features
