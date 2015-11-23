@@ -9,12 +9,18 @@ projects[] = entity
 projects[] = entityreference
 projects[] = file_entity
 projects[] = features
+projects[] = getid3
 projects[] = libraries
 projects[] = media
 projects[] = navbar
 projects[] = strongarm
 projects[] = token
 projects[] = views
+projects[] = views_rss
+
+projects[views_rss_itunes][type] = module
+projects[views_rss_itunes][download][branch] = 7.x-1.x
+projects[views_rss_itunes][download][revision] = 576e8f152d3dd
 
 ; Contrib Themes
 projects[] = ember
@@ -33,3 +39,8 @@ libraries[backbone][download][tag] = 1.0.0
 libraries[underscore][download][type] = git
 libraries[underscore][download][url] = https://github.com/jashkenas/underscore.git
 libraries[underscore][download][tag] = 1.5.0
+
+; Library: GetID3
+libraries[getid3][download][type] = git
+libraries[getid3][download][url] = https://github.com/JamesHeinrich/getID3.git
+libraries[getid3][download][tag] = v1.9.10
