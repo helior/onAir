@@ -7,11 +7,14 @@ defaults[projects][subdir] = contrib
 projects[] = ctools
 projects[] = entity
 projects[] = entityreference
+projects[] = file_entity
 projects[] = features
 projects[] = libraries
+projects[] = media
 projects[] = navbar
 projects[] = strongarm
 projects[] = token
+projects[] = views
 
 ; Contrib Themes
 projects[] = ember
