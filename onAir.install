@@ -6,8 +6,8 @@
 function onAir_install() {
   module_enable(array(
     'navbar',
-    'onair_episode',
-    
+    'onair_episode_feed',
+
     // Development
     'field_ui'
   ));
