@@ -9,9 +9,9 @@
  */
 function onair_references_taxonomy_default_vocabularies() {
   return array(
-    'tags' => array(
-      'name' => 'Tags',
-      'machine_name' => 'tags',
+    'keywords' => array(
+      'name' => 'Keywords',
+      'machine_name' => 'keywords',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',
