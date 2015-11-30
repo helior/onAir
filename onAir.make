@@ -11,16 +11,11 @@ projects[] = file_entity
 projects[] = features
 projects[] = getid3
 projects[] = libraries
-projects[] = media
 projects[] = navbar
+projects[] = s3fs
 projects[] = strongarm
 projects[] = token
 projects[] = views
-projects[] = views_rss
-
-projects[views_rss_itunes][type] = module
-projects[views_rss_itunes][download][branch] = 7.x-1.x
-projects[views_rss_itunes][download][revision] = 576e8f152d3dd
 
 ; Contrib Themes
 projects[] = ember

@@ -6,6 +6,9 @@ A podcasting platform made with ♥.
   - `drush make --no-core --contrib-destination=. --yes onAir.make`
 
 ## TODOS:
-  - Podcast RSS feed generator (https://www.drupal.org/node/1473728)
-  - Amazon S3 file integration (amazons3 or s3fs)
+  - Custom Podcast RSS feed generator
   - Sponsor content-type
+  - Keyword free-style tagging field
+  - Machine-name for Podcasts
+  - Podcast reference select box
+  - episode itunes:summary default ↔︎ description
