@@ -13,6 +13,7 @@ projects[] = getid3
 projects[] = libraries
 projects[] = navbar
 projects[] = s3fs
+projects[] = safeword
 projects[] = strongarm
 projects[] = token
 projects[] = views
