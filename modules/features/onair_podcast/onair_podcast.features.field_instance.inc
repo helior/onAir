@@ -56,7 +56,7 @@ function onair_podcast_field_default_field_instances() {
         'progress_indicator' => 'bar',
       ),
       'type' => 'image_image',
-      'weight' => 9,
+      'weight' => 3,
     ),
   );
 
@@ -97,7 +97,7 @@ If the <itunes:block> tag is populated with any other value, it will have no eff
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 4,
+      'weight' => 8,
     ),
   );
 
@@ -139,7 +139,7 @@ This tag is only supported at a <channel> (podcast) level.
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 5,
+      'weight' => 9,
     ),
   );
 
@@ -184,7 +184,7 @@ Note that podcasts that contain explicit material are not available in some iTun
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 7,
     ),
   );
 
@@ -232,7 +232,7 @@ This tag is only supported at a <channel> (podcast) level.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 10,
     ),
   );
 
@@ -272,7 +272,7 @@ This tag is only supported at a <channel> (podcast) level.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 11,
     ),
   );
 
@@ -312,7 +312,7 @@ This tag is only supported at a <channel> (podcast) level.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -3,
+      'weight' => 4,
     ),
   );
 
@@ -354,7 +354,44 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
         'rows' => 3,
       ),
       'type' => 'text_textarea',
-      'weight' => -2,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-podcast-field_name'.
+  $field_instances['node-podcast-field_name'] = array(
+    'bundle' => 'podcast',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'safeword',
+        'settings' => array(),
+        'type' => 'safeword_machine_basic',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_name',
+    'label' => 'Name',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'safeword',
+      'settings' => array(),
+      'type' => 'safeword_machine_name_only',
+      'weight' => 1,
     ),
   );
 
@@ -408,7 +445,7 @@ Within the newer browsing system based on Category links, including the Top Podc
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 2,
+      'weight' => 6,
     ),
   );
 
@@ -456,7 +493,7 @@ Within the newer browsing system based on Category links, including the Top Podc
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete_tags',
-      'weight' => 8,
+      'weight' => 12,
     ),
   );
 
@@ -495,7 +532,7 @@ Within the newer browsing system based on Category links, including the Top Podc
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => -4,
+      'weight' => 2,
     ),
   );
 
@@ -508,6 +545,7 @@ If the <itunes:block> tag is present and populated with the “yes” value insi
 If the <itunes:block> tag is populated with any other value, it will have no effect.');
   t('Image');
   t('Keywords');
+  t('Name');
   t('Network');
   t('The <itunes:complete> tag, populated with a “yes” value, indicates that a podcast has been completed and no further episodes will be posted in the future.
 
