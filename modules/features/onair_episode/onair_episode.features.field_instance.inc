@@ -10,6 +10,134 @@
 function onair_episode_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-episode-field_file'.
+  $field_instances['node-episode-field_file'] = array(
+    'bundle' => 'episode',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_file',
+    'label' => 'File',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => 'file/episode',
+      'file_extensions' => 'm4a mp3 mov mp4 m4v pdf epub',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'bar',
+      ),
+      'type' => 'file_generic',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-episode-field_itunes_sub_title'.
+  $field_instances['node-episode-field_itunes_sub_title'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_sub_title',
+    'label' => 'iTunes: Sub-title',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-episode-field_itunes_summary'.
+  $field_instances['node-episode-field_itunes_summary'] = array(
+    'bundle' => 'episode',
+    'default_value' => array(
+      0 => array(
+        'value' => 'The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
+
+If a <itunes:summary> tag is not included, the contents of the <description> tag are used.',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_summary',
+    'label' => 'iTunes: Summary',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-episode-field_media_type'.
   $field_instances['node-episode-field_media_type'] = array(
     'bundle' => 'episode',
@@ -178,10 +306,14 @@ function onair_episode_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('File');
   t('Media Type');
   t('Podcast');
   t('Show Notes');
   t('Synopsis');
+  t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
+  t('iTunes: Sub-title');
+  t('iTunes: Summary');
 
   return $field_instances;
 }
