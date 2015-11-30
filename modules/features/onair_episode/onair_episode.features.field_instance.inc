@@ -33,7 +33,7 @@ function onair_episode_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_file',
     'label' => 'File',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'description_field' => 0,
       'file_directory' => 'file/episode',
@@ -95,15 +95,11 @@ function onair_episode_field_default_field_instances() {
   // Exported field_instance: 'node-episode-field_itunes_summary'.
   $field_instances['node-episode-field_itunes_summary'] = array(
     'bundle' => 'episode',
-    'default_value' => array(
-      0 => array(
-        'value' => 'The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
 
 If a <itunes:summary> tag is not included, the contents of the <description> tag are used.',
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -205,19 +201,15 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
     'entity_type' => 'node',
     'field_name' => 'field_ref_podcast',
     'label' => 'Podcast',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'entityreference',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-      ),
-      'type' => 'entityreference_autocomplete_tags',
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
       'weight' => -3,
     ),
   );
@@ -312,6 +304,9 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
   t('Show Notes');
   t('Synopsis');
   t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
+  t('The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
+
+If a <itunes:summary> tag is not included, the contents of the <description> tag are used.');
   t('iTunes: Sub-title');
   t('iTunes: Summary');
 

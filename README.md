@@ -8,7 +8,3 @@ A podcasting platform made with ♥.
 ## TODOS:
   - Custom Podcast RSS feed generator
   - Sponsor content-type
-  - Keyword free-style tagging field
-  - Machine-name for Podcasts
-  - Podcast reference select box
-  - episode itunes:summary default ↔︎ description
