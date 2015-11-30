@@ -10,6 +10,56 @@
 function onair_podcast_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-podcast-field_image'.
+  $field_instances['node-podcast-field_image'] = array(
+    'bundle' => 'podcast',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_image',
+    'label' => 'Image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => 'podcast/image',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'large',
+        'progress_indicator' => 'bar',
+      ),
+      'type' => 'image_image',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-podcast-field_itunes_block'.
   $field_instances['node-podcast-field_itunes_block'] = array(
     'bundle' => 'podcast',
@@ -456,6 +506,7 @@ Within the newer browsing system based on Category links, including the Top Podc
 If the <itunes:block> tag is present and populated with the “yes” value inside an <item> (episode) element, it will prevent that episode from appearing in the iTunes Store podcast directory. For example, you may want to block a specific episode if you know that its content would otherwise cause the entire podcast to be removed from the iTunes Store.
 
 If the <itunes:block> tag is populated with any other value, it will have no effect.');
+  t('Image');
   t('Keywords');
   t('Network');
   t('The <itunes:complete> tag, populated with a “yes” value, indicates that a podcast has been completed and no further episodes will be posted in the future.
