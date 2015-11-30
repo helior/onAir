@@ -1,0 +1,12 @@
+name = onAir Fields
+core = 7.x
+package = onAir
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = file
+dependencies[] = image
+dependencies[] = s3fs
+features[features_api][] = api:2
+features[field_base][] = field_file
+features[field_base][] = field_image
+project path = profiles/onAir/modules/features
