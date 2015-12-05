@@ -5,3 +5,24 @@
  */
 
 include_once 'onair_podcast.features.inc';
+
+/**
+ * menu object load callback.
+ */
+function onair_podcast_machine_name_load($arg) {
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->fieldCondition('field_name', 'machine', $arg);
+
+  $results = $query->execute();
+
+  // Return FALSE if no results are found.
+  if (empty($results)) {
+    return FALSE;
+  }
+
+  $result = reset($results['node']);
+  $podcast = $result->nid;
+  return node_load($podcast);
+}
