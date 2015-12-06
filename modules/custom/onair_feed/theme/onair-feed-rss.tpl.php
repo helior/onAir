@@ -42,6 +42,10 @@
     <itunes:image href="<?php print file_create_url($podcast->field_image->value()['uri']); ?>" />
     <?php endif; ?>
 
+    <?php if (!empty($itunes_categories)): ?>
+      <?php print drupal_render($itunes_categories); ?>
+    <?php endif; ?>
+
   </channel>
   <?php endif; ?>
 
