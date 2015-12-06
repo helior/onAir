@@ -18,6 +18,10 @@
     <copyright><?php print htmlspecialchars($podcast->field_copyright->value(), ENT_COMPAT, 'UTF-8'); ?></copyright>
     <?php endif; ?>
 
+    <?php if (!empty($podcast->field_itunes_author->value())): ?>
+    <itunes:author><?php print $podcast->field_itunes_author->value(); ?></itunes:author>
+    <?php endif; ?>
+
     <?php if (!empty($podcast->field_image->value())): ?>
     <itunes:image href="<?php print file_create_url($podcast->field_image->value()['uri']); ?>" />
     <?php endif; ?>
