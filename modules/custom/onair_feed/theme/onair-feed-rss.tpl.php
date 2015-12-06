@@ -29,6 +29,12 @@
 
     <?php if (!empty($podcast->field_itunes_owner->value())): ?>
     <itunes:owner>
+      <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_name->value())): ?>
+      <itunes:name><?php print $podcast->field_itunes_owner->field_itunes_owner_name->value(); ?></itunes:name>
+      <?php endif; ?>
+      <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_email->value())): ?>
+      <itunes:email><?php print $podcast->field_itunes_owner->field_itunes_owner_email->value(); ?></itunes:email>
+      <?php endif; ?>
     </itunes:owner>
     <?php endif; ?>
 
