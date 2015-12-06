@@ -12,13 +12,16 @@ projects[] = file_entity
 projects[] = features
 projects[] = getid3
 projects[] = libraries
-projects[] = multifield
 projects[] = navbar
 projects[] = s3fs
 projects[] = safeword
 projects[] = strongarm
 projects[] = token
 projects[] = views
+
+projects[multifield][download][branch] = 7.x-1.x
+projects[multifield][download][revision] = 	1aaeaa
+projects[multifield][patch][2546900] = https://www.drupal.org/files/issues/multifield-2546900-include-module-file-2.patch
 
 ; Contrib Themes
 projects[] = ember
