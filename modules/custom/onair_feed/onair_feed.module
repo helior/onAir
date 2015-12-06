@@ -46,7 +46,13 @@ function onair_feed_rss_page_callback($podcast) {
     drupal_add_http_header('Content-Language', $language->language);
   }
 
-  print theme('onair_feed_rss', array('podcast' => $podcast));
+  $output = theme('onair_feed_rss', array('podcast' => $podcast));
+  print tidy_repair_string($output, array(
+    'output-xml' => true,
+    'input-xml' => true,
+    'indent' => true,
+    'wrap' => 0,
+));
   drupal_page_footer();
   exit;
 }
