@@ -7,4 +7,7 @@ A podcasting platform made with ♥.
 
 ## TODOS:
   - Custom Podcast RSS feed generator
+    - page callback to load all episodes of podcast
+    - xml template
   - Sponsor content-type
+  - Format tidy XML in PHP
