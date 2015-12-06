@@ -100,6 +100,48 @@ function onair_podcast_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-podcast-field_itunes_author'.
+  $field_instances['node-podcast-field_itunes_author'] = array(
+    'bundle' => 'podcast',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The content of this tag is shown in the Artist column in iTunes. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.
+
+Visible under podcast title and in iTunes Store Browse.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_author',
+    'label' => 'iTunes: Author',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 15,
+    ),
+  );
+
   // Exported field_instance: 'node-podcast-field_itunes_block'.
   $field_instances['node-podcast-field_itunes_block'] = array(
     'bundle' => 'podcast',
@@ -654,6 +696,9 @@ For more information, please see the “Changing Your Feed URL” section earlie
 
 This tag is only supported at a <channel> (podcast) level.');
   t('The <itunes:owner> tag contains contact information for the owner of the podcast intended to be used for administrative communication about the podcast. This information is not displayed on the iTunes Store.');
+  t('The content of this tag is shown in the Artist column in iTunes. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.
+
+Visible under podcast title and in iTunes Store Browse.');
   t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
   t('The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
 
@@ -671,6 +716,7 @@ Use the <itunes:category> tag to specify the browsing category. You must also de
 Within the newer browsing system based on Category links, including the Top Podcasts and Top Episodes lists, only the first category listed in the feed will be recognized. A complete list of categories and subcategories included at the end of this document.');
   t('Visible under podcast details.');
   t('Website link under podcast details.');
+  t('iTunes: Author');
   t('iTunes: Block');
   t('iTunes: Category');
   t('iTunes: Complete');

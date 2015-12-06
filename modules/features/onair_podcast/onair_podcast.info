@@ -16,6 +16,7 @@ dependencies[] = text
 features[features_api][] = api:2
 features[field_instance][] = node-podcast-field_copyright
 features[field_instance][] = node-podcast-field_image
+features[field_instance][] = node-podcast-field_itunes_author
 features[field_instance][] = node-podcast-field_itunes_block
 features[field_instance][] = node-podcast-field_itunes_complete
 features[field_instance][] = node-podcast-field_itunes_explicit
