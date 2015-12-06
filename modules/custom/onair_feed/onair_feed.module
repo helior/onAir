@@ -23,7 +23,7 @@ function onair_feed_menu() {
  */
 function onair_feed_theme($existing, $type, $theme, $path) {
   $themes['onair_feed_rss'] = array(
-    'arguments' => array('podcast' => null, 'episodes' => array()),
+    'arguments' => array('podcast' => null),
     'path' => $path . '/theme',
     'file' => 'theme.inc',
     'template' => 'onair-feed-rss',
