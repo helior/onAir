@@ -4,47 +4,59 @@
   <?php if ($podcast): ?>
   <channel>
     <language>en-us</language><?php //@TODO Do not hard-code language-code ?>
-    <title><?php print $podcast->title->value();?></title>
+
+    <?php if (!empty($podcast->title->value())):?>
+      <title><?php print $podcast->title->value();?></title>
+    <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_sub_title->value())): ?>
-    <itunes:subtitle><?php print $podcast->field_itunes_sub_title->value(); ?></itunes:subtitle>
+      <itunes:subtitle><?php print $podcast->field_itunes_sub_title->value(); ?></itunes:subtitle>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_link_url->value())): ?>
-    <link><?php print $podcast->field_link_url->value(); ?></link>
+      <link><?php print $podcast->field_link_url->value(); ?></link>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_copyright->value())): ?>
-    <copyright><?php print $podcast->field_copyright->value(); ?></copyright>
+      <copyright><?php print $podcast->field_copyright->value(); ?></copyright>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_author->value())): ?>
-    <itunes:author><?php print $podcast->field_itunes_author->value(); ?></itunes:author>
+      <itunes:author><?php print $podcast->field_itunes_author->value(); ?></itunes:author>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_summary->value())): ?>
-    <itunes:summary><?php print $podcast->field_itunes_summary->value(); ?></itunes:summary>
-    <description><?php print $podcast->field_itunes_summary->value(); ?></description>
+      <itunes:summary><?php print $podcast->field_itunes_summary->value(); ?></itunes:summary>
+      <description><?php print $podcast->field_itunes_summary->value(); ?></description>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_owner->value())): ?>
-    <itunes:owner>
-      <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_name->value())): ?>
-      <itunes:name><?php print $podcast->field_itunes_owner->field_itunes_owner_name->value(); ?></itunes:name>
-      <?php endif; ?>
-      <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_email->value())): ?>
-      <itunes:email><?php print $podcast->field_itunes_owner->field_itunes_owner_email->value(); ?></itunes:email>
-      <?php endif; ?>
-    </itunes:owner>
+      <itunes:owner>
+        <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_name->value())): ?>
+          <itunes:name><?php print $podcast->field_itunes_owner->field_itunes_owner_name->value(); ?></itunes:name>
+        <?php endif; ?>
+        <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_email->value())): ?>
+          <itunes:email><?php print $podcast->field_itunes_owner->field_itunes_owner_email->value(); ?></itunes:email>
+        <?php endif; ?>
+      </itunes:owner>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_image->value())): ?>
-    <itunes:image href="<?php print file_create_url($podcast->field_image->value()['uri']); ?>" />
+      <itunes:image href="<?php print file_create_url($podcast->field_image->value()['uri']); ?>" />
     <?php endif; ?>
 
     <?php if (!empty($itunes_categories)): ?>
       <?php print drupal_render($itunes_categories); ?>
     <?php endif; ?>
+
+    <?php foreach ($episodes as $episode): ?>
+      <item>
+        <?php if (!empty($episode->title->value())): ?>
+          <title><?php print $episode->title->value(); ?></title>
+        <?php endif; ?>
+
+      </item>
+    <?php endforeach; ?>
 
   </channel>
   <?php endif; ?>

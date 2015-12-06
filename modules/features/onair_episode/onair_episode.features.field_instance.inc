@@ -52,6 +52,46 @@ function onair_episode_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-episode-field_itunes_author'.
+  $field_instances['node-episode-field_itunes_author'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The content of this tag is shown in the Artist column in iTunes. If the <itunes:author> tag is not present, iTunes uses the contents of the <author> tag. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_author',
+    'label' => 'iTunes: Author',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 6,
+    ),
+  );
+
   // Exported field_instance: 'node-episode-field_itunes_sub_title'.
   $field_instances['node-episode-field_itunes_sub_title'] = array(
     'bundle' => 'episode',
@@ -303,10 +343,12 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
   t('Podcast');
   t('Show Notes');
   t('Synopsis');
+  t('The content of this tag is shown in the Artist column in iTunes. If the <itunes:author> tag is not present, iTunes uses the contents of the <author> tag. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.');
   t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
   t('The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
 
 If a <itunes:summary> tag is not included, the contents of the <description> tag are used.');
+  t('iTunes: Author');
   t('iTunes: Sub-title');
   t('iTunes: Summary');
 
