@@ -24,6 +24,12 @@
 
     <?php if (!empty($podcast->field_itunes_summary->value())): ?>
     <itunes:summary><?php print $podcast->field_itunes_summary->value(); ?></itunes:summary>
+    <description><?php print $podcast->field_itunes_summary->value(); ?></description>
+    <?php endif; ?>
+
+    <?php if (!empty($podcast->field_itunes_owner->value())): ?>
+    <itunes:owner>
+    </itunes:owner>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_image->value())): ?>
