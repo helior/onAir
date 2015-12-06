@@ -1,0 +1,4 @@
+name = onAir Feed
+description = Provides a feed URL for published podcasts
+core = 7.x
+package = onAir
