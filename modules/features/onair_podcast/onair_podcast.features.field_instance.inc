@@ -10,6 +10,46 @@
 function onair_podcast_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-podcast-field_copyright'.
+  $field_instances['node-podcast-field_copyright'] = array(
+    'bundle' => 'podcast',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Visible under podcast details.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_copyright',
+    'label' => 'Copyright',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 14,
+    ),
+  );
+
   // Exported field_instance: 'node-podcast-field_image'.
   $field_instances['node-podcast-field_image'] = array(
     'bundle' => 'podcast',
@@ -358,6 +398,46 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
     ),
   );
 
+  // Exported field_instance: 'node-podcast-field_link_url'.
+  $field_instances['node-podcast-field_link_url'] = array(
+    'bundle' => 'podcast',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Website link under podcast details.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_link_url',
+    'label' => 'Link URL',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'node-podcast-field_name'.
   $field_instances['node-podcast-field_name'] = array(
     'bundle' => 'podcast',
@@ -538,6 +618,7 @@ Within the newer browsing system based on Category links, including the Top Podc
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Copyright');
   t('If the <itunes:block> tag is present and populated with the “yes” value inside a <channel> (podcast) element, it will prevent the entire podcast from appearing in the iTunes Store podcast directory.
 
 If the <itunes:block> tag is present and populated with the “yes” value inside an <item> (episode) element, it will prevent that episode from appearing in the iTunes Store podcast directory. For example, you may want to block a specific episode if you know that its content would otherwise cause the entire podcast to be removed from the iTunes Store.
@@ -545,6 +626,7 @@ If the <itunes:block> tag is present and populated with the “yes” value insi
 If the <itunes:block> tag is populated with any other value, it will have no effect.');
   t('Image');
   t('Keywords');
+  t('Link URL');
   t('Name');
   t('Network');
   t('The <itunes:complete> tag, populated with a “yes” value, indicates that a podcast has been completed and no further episodes will be posted in the future.
@@ -587,6 +669,8 @@ Within the older, text-based browsing system, podcast feeds may list up to three
 Use the <itunes:category> tag to specify the browsing category. You must also define a subcategory if one is available within your category.
 
 Within the newer browsing system based on Category links, including the Top Podcasts and Top Episodes lists, only the first category listed in the feed will be recognized. A complete list of categories and subcategories included at the end of this document.');
+  t('Visible under podcast details.');
+  t('Website link under podcast details.');
   t('iTunes: Block');
   t('iTunes: Category');
   t('iTunes: Complete');
