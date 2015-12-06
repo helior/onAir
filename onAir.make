@@ -21,6 +21,7 @@ projects[] = views
 
 projects[multifield][download][branch] = 7.x-1.x
 projects[multifield][download][revision] = 	1aaeaa
+projects[multifield][patch][2041531] = https://www.drupal.org/files/issues/2041531-23-entity-api-support.patch
 projects[multifield][patch][2546900] = https://www.drupal.org/files/issues/multifield-2546900-include-module-file-2.patch
 
 ; Contrib Themes
