@@ -13,6 +13,7 @@ function onair_podcast_machine_name_load($arg) {
   $query = new EntityFieldQuery();
   $query
     ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'podcast')
     ->fieldCondition('field_name', 'machine', $arg);
 
   $results = $query->execute();

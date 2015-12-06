@@ -7,3 +7,4 @@ A podcasting platform made with ♥.
 
 ## TODOS:
   - Sponsor content-type
+  - fix encoding of copyright symbol
