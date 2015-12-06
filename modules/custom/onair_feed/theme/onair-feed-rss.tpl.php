@@ -15,7 +15,7 @@
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_copyright->value())): ?>
-    <copyright><?php print htmlspecialchars($podcast->field_copyright->value(), ENT_COMPAT, 'UTF-8'); ?></copyright>
+    <copyright><?php print $podcast->field_copyright->value(); ?></copyright>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_author->value())): ?>
