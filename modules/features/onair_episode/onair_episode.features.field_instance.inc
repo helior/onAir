@@ -56,13 +56,13 @@ function onair_episode_field_default_field_instances() {
   $field_instances['node-episode-field_image'] = array(
     'bundle' => 'episode',
     'deleted' => 0,
-    'description' => 'The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+    'description' => 'The itunes:image tag points to the artwork for your podcast, via the URL specified in the "a href" attribute.
 
 Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
 
 Potential subscribers will see your cover art in varying sizes depending on the device they’re using. Make sure your design is effective at both its original size and at thumbnail size.
 
-If the <itunes:image> tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
+If the itunes:image tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
 
 We recommend including a title, brand, or source name as part of your cover art. For examples of cover art, see the Top Podcasts section in the Podcasts app or the iTunes Store.
 
@@ -72,7 +72,7 @@ If you update the cover art for your podcast, be sure to avoid technical issues 
 
 - verify the web server hosting your cover art allows HTTP head requests
 
-The <itunes:image> tag is also supported at the <item> (episode) level.
+The itunes:image tag is also supported at the item (episode) level.
 
 For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.',
     'display' => array(
@@ -157,6 +157,48 @@ For best results, we also recommend embedding the same cover art within the meta
       ),
       'type' => 'text_textfield',
       'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-episode-field_itunes_duration'.
+  $field_instances['node-episode-field_itunes_duration'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The content of the <itunes:duration> tag is shown in the Time column in the List View on iTunes.
+
+The value provided for this tag can be formatted as HH:MM:SS, H:MM:SS, MM:SS, or M:SS, where H = hours, M = minutes, S = seconds. If a single number is provided as a value (no colons are used), the value is assumed to be in seconds. If one colon is present, the number to the left is assumed to be minutes, and the number to the right is assumed to be seconds. If more than two colons are present, the numbers farthest to the right are ignored.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_duration',
+    'label' => 'iTunes: Duration',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
     ),
   );
 
@@ -369,13 +411,21 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
   t('Media Type');
   t('Podcast');
   t('Show Notes');
-  t('The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+  t('The content of the <itunes:duration> tag is shown in the Time column in the List View on iTunes.
+
+The value provided for this tag can be formatted as HH:MM:SS, H:MM:SS, MM:SS, or M:SS, where H = hours, M = minutes, S = seconds. If a single number is provided as a value (no colons are used), the value is assumed to be in seconds. If one colon is present, the number to the left is assumed to be minutes, and the number to the right is assumed to be seconds. If more than two colons are present, the numbers farthest to the right are ignored.');
+  t('The content of this tag is shown in the Artist column in iTunes. If the <itunes:author> tag is not present, iTunes uses the contents of the <author> tag. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.');
+  t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
+  t('The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
+
+If a <itunes:summary> tag is not included, the contents of the <description> tag are used.');
+  t('The itunes:image tag points to the artwork for your podcast, via the URL specified in the "a href" attribute.
 
 Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
 
 Potential subscribers will see your cover art in varying sizes depending on the device they’re using. Make sure your design is effective at both its original size and at thumbnail size.
 
-If the <itunes:image> tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
+If the itunes:image tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
 
 We recommend including a title, brand, or source name as part of your cover art. For examples of cover art, see the Top Podcasts section in the Podcasts app or the iTunes Store.
 
@@ -385,15 +435,11 @@ If you update the cover art for your podcast, be sure to avoid technical issues 
 
 - verify the web server hosting your cover art allows HTTP head requests
 
-The <itunes:image> tag is also supported at the <item> (episode) level.
+The itunes:image tag is also supported at the item (episode) level.
 
 For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.');
-  t('The content of this tag is shown in the Artist column in iTunes. If the <itunes:author> tag is not present, iTunes uses the contents of the <author> tag. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.');
-  t('The contents of the <itunes:subtitle> tag are displayed in the Description column in iTunes. For best results, choose a subtitle that is only a few words long.');
-  t('The contents of the <itunes:summary> tag are shown on the iTunes Store page for your podcast. The information also appears in a separate window if the information (“i”) icon in the Description column is clicked. This field can be up to 4000 characters.
-
-If a <itunes:summary> tag is not included, the contents of the <description> tag are used.');
   t('iTunes: Author');
+  t('iTunes: Duration');
   t('iTunes: Sub-title');
   t('iTunes: Summary');
 

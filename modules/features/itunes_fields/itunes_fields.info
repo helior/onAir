@@ -12,6 +12,7 @@ features[features_api][] = api:2
 features[field_base][] = field_itunes_author
 features[field_base][] = field_itunes_block
 features[field_base][] = field_itunes_complete
+features[field_base][] = field_itunes_duration
 features[field_base][] = field_itunes_explicit
 features[field_base][] = field_itunes_new_feed_url
 features[field_base][] = field_itunes_owner
