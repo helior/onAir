@@ -22,6 +22,7 @@ features[field_instance][] = node-episode-field_itunes_author
 features[field_instance][] = node-episode-field_itunes_block
 features[field_instance][] = node-episode-field_itunes_duration
 features[field_instance][] = node-episode-field_itunes_explicit
+features[field_instance][] = node-episode-field_itunes_is_closed_caption
 features[field_instance][] = node-episode-field_itunes_sub_title
 features[field_instance][] = node-episode-field_itunes_summary
 features[field_instance][] = node-episode-field_media_type

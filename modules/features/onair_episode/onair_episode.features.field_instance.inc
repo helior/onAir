@@ -288,6 +288,49 @@ Note that podcasts that contain explicit material are not available in some iTun
     ),
   );
 
+  // Exported field_instance: 'node-episode-field_itunes_is_closed_caption'.
+  $field_instances['node-episode-field_itunes_is_closed_caption'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The <itunes:isClosedCaptioned> tag should be used with a “yes” value for a video podcast episode with embedded closed captioning.
+
+A closed-caption icon will appear next to the corresponding episode.
+
+If the closed-caption tag is present and has any other value, no closed-caption indicator will appear.
+
+This tag is only supported at the <item> (episode) level.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 12,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_is_closed_caption',
+    'label' => 'iTunes: Is Closed Caption',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 14,
+    ),
+  );
+
   // Exported field_instance: 'node-episode-field_itunes_sub_title'.
   $field_instances['node-episode-field_itunes_sub_title'] = array(
     'bundle' => 'episode',
@@ -511,6 +554,13 @@ If you populate this tag with the “clean” value, indicating that none of you
 If you populate this tag with any other value besides “yes” or “clean,” neither of the parental advisory graphics will appear and that space will remain blank.
 
 Note that podcasts that contain explicit material are not available in some iTunes Store territories.');
+  t('The <itunes:isClosedCaptioned> tag should be used with a “yes” value for a video podcast episode with embedded closed captioning.
+
+A closed-caption icon will appear next to the corresponding episode.
+
+If the closed-caption tag is present and has any other value, no closed-caption indicator will appear.
+
+This tag is only supported at the <item> (episode) level.');
   t('The content of the <itunes:duration> tag is shown in the Time column in the List View on iTunes.
 
 The value provided for this tag can be formatted as HH:MM:SS, H:MM:SS, MM:SS, or M:SS, where H = hours, M = minutes, S = seconds. If a single number is provided as a value (no colons are used), the value is assumed to be in seconds. If one colon is present, the number to the left is assumed to be minutes, and the number to the right is assumed to be seconds. If more than two colons are present, the numbers farthest to the right are ignored.');
@@ -542,6 +592,7 @@ For best results, we also recommend embedding the same cover art within the meta
   t('iTunes: Block');
   t('iTunes: Duration');
   t('iTunes: Explicit');
+  t('iTunes: Is Closed Caption');
   t('iTunes: Sub-title');
   t('iTunes: Summary');
 

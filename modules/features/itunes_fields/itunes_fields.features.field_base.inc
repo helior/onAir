@@ -125,6 +125,30 @@ function itunes_fields_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_itunes_is_closed_caption'.
+  $field_bases['field_itunes_is_closed_caption'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_itunes_is_closed_caption',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'yes' => 'Contains embedded closed-captioning',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_itunes_new_feed_url'.
   $field_bases['field_itunes_new_feed_url'] = array(
     'active' => 1,

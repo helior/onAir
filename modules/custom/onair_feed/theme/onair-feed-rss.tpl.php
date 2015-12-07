@@ -108,6 +108,9 @@
           <itunes:block><?php print $episode->field_itunes_block->value(); ?></itunes:block>
         <?php endif; ?>
 
+        <?php if (!empty($episode->field_itunes_is_closed_caption->value())): ?>
+          <itunes:isClosedCaptioned><?php print $episode->field_itunes_is_closed_caption->value(); ?></itunes:isClosedCaptioned>
+        <?php endif; ?>
       </item>
     <?php endforeach; ?>
 
