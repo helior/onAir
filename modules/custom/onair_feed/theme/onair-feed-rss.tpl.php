@@ -51,6 +51,8 @@
 
     <?php foreach ($episodes as $episode): ?>
       <item>
+        <pubDate><?php print date('D, d M Y h:i:s e', $podcast->created->value()); ?></pubDate>
+
         <?php if (!empty($episode->title->value())): ?>
           <title><?php print $episode->title->value(); ?></title>
         <?php endif; ?>
@@ -76,6 +78,10 @@
           <?php $file_url = file_create_url($episode->field_file->value()['uri']); ?>
           <enclosure url="<?php print $file_url; ?>" length="<?php print $episode->field_file->value()['filesize']; ?>" type="<?php print $episode->field_file->value()['filemime'] ?>" />
           <guid><?php print $file_url; ?></guid>
+        <?php endif; ?>
+
+        <?php if (!empty($episode->field_itunes_duration->value())): ?>
+          <itunes:duration><?php print $episode->field_itunes_duration->value(); ?></itunes:duration>
         <?php endif; ?>
 
       </item>
