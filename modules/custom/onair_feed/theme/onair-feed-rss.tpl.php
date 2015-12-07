@@ -63,6 +63,10 @@
           <itunes:author><?php print $episode->field_itunes_author->value(); ?></itunes:author>
         <?php endif; ?>
 
+        <?php if (!empty($episode->field_image->value())): ?>
+          <itunes:image href="<?php print file_create_url($episode->field_image->value()['uri']); ?>" />
+        <?php endif; ?>
+
       </item>
     <?php endforeach; ?>
 
