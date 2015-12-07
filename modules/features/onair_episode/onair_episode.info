@@ -16,6 +16,7 @@ features[field_base][] = field_media_type
 features[field_base][] = field_show_notes
 features[field_base][] = field_synopsis
 features[field_instance][] = node-episode-field_file
+features[field_instance][] = node-episode-field_image
 features[field_instance][] = node-episode-field_itunes_author
 features[field_instance][] = node-episode-field_itunes_sub_title
 features[field_instance][] = node-episode-field_itunes_summary

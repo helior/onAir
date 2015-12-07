@@ -54,7 +54,25 @@ function onair_podcast_field_default_field_instances() {
   $field_instances['node-podcast-field_image'] = array(
     'bundle' => 'podcast',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+
+Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
+
+Potential subscribers will see your cover art in varying sizes depending on the device they’re using. Make sure your design is effective at both its original size and at thumbnail size.
+
+If the <itunes:image> tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
+
+We recommend including a title, brand, or source name as part of your cover art. For examples of cover art, see the Top Podcasts section in the Podcasts app or the iTunes Store.
+
+If you update the cover art for your podcast, be sure to avoid technical issues by doing the following:
+
+- change the cover art file name and URL at the same time
+
+- verify the web server hosting your cover art allows HTTP head requests
+
+The <itunes:image> tag is also supported at the <item> (episode) level.
+
+For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -81,10 +99,10 @@ function onair_podcast_field_default_field_instances() {
       'alt_field' => 0,
       'default_image' => 0,
       'file_directory' => 'podcast/image',
-      'file_extensions' => 'png gif jpg jpeg',
+      'file_extensions' => 'png jpg jpeg',
       'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
+      'max_resolution' => '3000x3000',
+      'min_resolution' => '1400x1400',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -323,14 +341,19 @@ This tag is only supported at a <channel> (podcast) level.',
     'bundle' => 'podcast',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The <itunes:owner> tag contains contact information for the owner of the podcast intended to be used for administrative communication about the podcast. This information is not displayed on the iTunes Store.',
+    'description' => 'The <itunes:owner> tag contains contact information for the owner of the podcast intended to be used for administrative communication about the podcast. This information is not displayed on the iTunes Store.
+
+The email address of the owner should be included in a nested <itunes:email> element. Include the name of the owner in a nested <itunes:name> element.
+',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 11,
+        'module' => 'multifield',
+        'settings' => array(
+          'view_mode' => 'default',
+        ),
+        'type' => 'multifield_default',
+        'weight' => 18,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -344,17 +367,14 @@ This tag is only supported at a <channel> (podcast) level.',
     'label' => 'iTunes: Owner',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 11,
+      'active' => 0,
+      'module' => 'multifield',
+      'settings' => array(),
+      'type' => 'multifield_default',
+      'weight' => 16,
     ),
   );
 
@@ -686,6 +706,25 @@ If you populate this tag with the “clean” value, indicating that none of you
 If you populate this tag with any other value besides “yes” or “clean,” neither of the parental advisory graphics will appear and that space will remain blank.
 
 Note that podcasts that contain explicit material are not available in some iTunes Store territories.');
+  t('The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+
+Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
+
+Potential subscribers will see your cover art in varying sizes depending on the device they’re using. Make sure your design is effective at both its original size and at thumbnail size.
+
+If the <itunes:image> tag is not present, iTunes will use the content of the RSS image tag, but your podcast will not be considered for a potential feature placement in the Podcasts app and the iTunes Store.
+
+We recommend including a title, brand, or source name as part of your cover art. For examples of cover art, see the Top Podcasts section in the Podcasts app or the iTunes Store.
+
+If you update the cover art for your podcast, be sure to avoid technical issues by doing the following:
+
+- change the cover art file name and URL at the same time
+
+- verify the web server hosting your cover art allows HTTP head requests
+
+The <itunes:image> tag is also supported at the <item> (episode) level.
+
+For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.');
   t('The <itunes:new-feed-url> tag allows you to change the URL where the RSS podcast feed is located, for example:
 
 <itunes:new-feed-url>http://newlocation.com/example.rss</itunes:new-feed-url>
@@ -695,7 +734,10 @@ After adding the tag to your old feed, you should maintain the old feed for 48 h
 For more information, please see the “Changing Your Feed URL” section earlier in this document.
 
 This tag is only supported at a <channel> (podcast) level.');
-  t('The <itunes:owner> tag contains contact information for the owner of the podcast intended to be used for administrative communication about the podcast. This information is not displayed on the iTunes Store.');
+  t('The <itunes:owner> tag contains contact information for the owner of the podcast intended to be used for administrative communication about the podcast. This information is not displayed on the iTunes Store.
+
+The email address of the owner should be included in a nested <itunes:email> element. Include the name of the owner in a nested <itunes:name> element.
+');
   t('The content of this tag is shown in the Artist column in iTunes. If <itunes:author> is not present at the RSS podcast feed level, iTunes will use the contents of <managingEditor>.
 
 Visible under podcast title and in iTunes Store Browse.');
