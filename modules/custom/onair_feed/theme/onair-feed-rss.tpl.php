@@ -57,6 +57,10 @@
       <?php print drupal_render($itunes_categories); ?>
     <?php endif; ?>
 
+    <?php if (!empty($podcast->field_itunes_complete->value())): ?>
+      <itunes:complete><?php print $podcast->field_itunes_complete->value(); ?></itunes:complete>
+    <?php endif; ?>
+
     <?php foreach ($episodes as $episode): ?>
       <item>
         <pubDate><?php print date('D, d M Y h:i:s e', $podcast->created->value()); ?></pubDate>
