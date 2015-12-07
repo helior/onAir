@@ -67,6 +67,11 @@
           <itunes:image href="<?php print file_create_url($episode->field_image->value()['uri']); ?>" />
         <?php endif; ?>
 
+        <?php if (!empty($episode->field_itunes_summary->value())): ?>
+          <itunes:summary><?php print $episode->field_itunes_summary->value(); ?></itunes:summary>
+          <description><?php print $episode->field_itunes_summary->value(); ?></description>
+        <?php endif; ?>
+
       </item>
     <?php endforeach; ?>
 
