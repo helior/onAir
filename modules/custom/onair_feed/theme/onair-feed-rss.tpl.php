@@ -3,7 +3,7 @@
 
   <?php if ($podcast): ?>
   <channel>
-    <language>en-us</language><?php //@TODO Do not hard-code language-code ?>
+    <language>en-us</language>
 
     <?php if (!empty($podcast->title->value())):?>
       <title><?php print $podcast->title->value();?></title>
@@ -28,6 +28,10 @@
     <?php if (!empty($podcast->field_itunes_summary->value())): ?>
       <itunes:summary><?php print $podcast->field_itunes_summary->value(); ?></itunes:summary>
       <description><?php print $podcast->field_itunes_summary->value(); ?></description>
+    <?php endif; ?>
+
+    <?php if (!empty($podcast->field_itunes_explicit->value())): ?>
+      <itunes:explicit><?php print $podcast->field_itunes_explicit->value(); ?></itunes:explicit>
     <?php endif; ?>
 
     <?php if (!empty($podcast->field_itunes_owner->value())): ?>
@@ -63,6 +67,10 @@
 
         <?php if (!empty($episode->field_itunes_author->value())): ?>
           <itunes:author><?php print $episode->field_itunes_author->value(); ?></itunes:author>
+        <?php endif; ?>
+
+        <?php if (!empty($episode->field_itunes_explicit->value())): ?>
+          <itunes:explicit><?php print $episode->field_itunes_explicit->value(); ?></itunes:explicit>
         <?php endif; ?>
 
         <?php if (!empty($episode->field_image->value())): ?>
