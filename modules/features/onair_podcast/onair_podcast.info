@@ -7,6 +7,7 @@ dependencies[] = features
 dependencies[] = image
 dependencies[] = itunes_fields
 dependencies[] = list
+dependencies[] = multifield
 dependencies[] = onair_fields
 dependencies[] = onair_network
 dependencies[] = onair_references

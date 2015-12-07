@@ -54,7 +54,7 @@ function onair_podcast_field_default_field_instances() {
   $field_instances['node-podcast-field_image'] = array(
     'bundle' => 'podcast',
     'deleted' => 0,
-    'description' => 'The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+    'description' => 'The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the "a href" attribute.
 
 Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
 
@@ -70,7 +70,7 @@ If you update the cover art for your podcast, be sure to avoid technical issues 
 
 - verify the web server hosting your cover art allows HTTP head requests
 
-The <itunes:image> tag is also supported at the <item> (episode) level.
+The <itunes:image> tag is also supported at the "item" (episode) level.
 
 For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.',
     'display' => array(
@@ -706,7 +706,7 @@ If you populate this tag with the “clean” value, indicating that none of you
 If you populate this tag with any other value besides “yes” or “clean,” neither of the parental advisory graphics will appear and that space will remain blank.
 
 Note that podcasts that contain explicit material are not available in some iTunes Store territories.');
-  t('The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
+  t('The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the "a href" attribute.
 
 Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
 
@@ -722,7 +722,7 @@ If you update the cover art for your podcast, be sure to avoid technical issues 
 
 - verify the web server hosting your cover art allows HTTP head requests
 
-The <itunes:image> tag is also supported at the <item> (episode) level.
+The <itunes:image> tag is also supported at the "item" (episode) level.
 
 For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.');
   t('The <itunes:new-feed-url> tag allows you to change the URL where the RSS podcast feed is located, for example:
