@@ -160,6 +160,47 @@ For best results, we also recommend embedding the same cover art within the meta
     ),
   );
 
+  // Exported field_instance: 'node-episode-field_itunes_block'.
+  $field_instances['node-episode-field_itunes_block'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'If the <itunes:block> tag is present and populated with the “yes” value inside a <channel> (podcast) element, it will prevent the entire podcast from appearing in the iTunes Store podcast directory.
+
+If the <itunes:block> tag is present and populated with the “yes” value inside an <item> (episode) element, it will prevent that episode from appearing in the iTunes Store podcast directory. For example, you may want to block a specific episode if you know that its content would otherwise cause the entire podcast to be removed from the iTunes Store.
+
+If the <itunes:block> tag is populated with any other value, it will have no effect.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 11,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_block',
+    'label' => 'iTunes: Block',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'node-episode-field_itunes_duration'.
   $field_instances['node-episode-field_itunes_duration'] = array(
     'bundle' => 'episode',
@@ -199,6 +240,51 @@ The value provided for this tag can be formatted as HH:MM:SS, H:MM:SS, MM:SS, or
       ),
       'type' => 'text_textfield',
       'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-episode-field_itunes_explicit'.
+  $field_instances['node-episode-field_itunes_explicit'] = array(
+    'bundle' => 'episode',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The <itunes:explicit> tag indicates whether your podcast contains explicit material. The two usable values for this tag are “yes” and “clean”.
+
+If you populate this tag with the “yes” value, indicating the presence of explicit content, an “explicit” parental advisory graphic will appear.
+
+If you populate this tag with the “clean” value, indicating that none of your podcast episodes contain explicit language or adult content, a “clean” parental advisory graphic will appear.
+
+If you populate this tag with any other value besides “yes” or “clean,” neither of the parental advisory graphics will appear and that space will remain blank.
+
+Note that podcasts that contain explicit material are not available in some iTunes Store territories.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_itunes_explicit',
+    'label' => 'iTunes: Explicit',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 11,
     ),
   );
 
@@ -407,10 +493,24 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
   // Translatables
   // Included for use with string extractors like potx.
   t('File');
+  t('If the <itunes:block> tag is present and populated with the “yes” value inside a <channel> (podcast) element, it will prevent the entire podcast from appearing in the iTunes Store podcast directory.
+
+If the <itunes:block> tag is present and populated with the “yes” value inside an <item> (episode) element, it will prevent that episode from appearing in the iTunes Store podcast directory. For example, you may want to block a specific episode if you know that its content would otherwise cause the entire podcast to be removed from the iTunes Store.
+
+If the <itunes:block> tag is populated with any other value, it will have no effect.');
   t('Image');
   t('Media Type');
   t('Podcast');
   t('Show Notes');
+  t('The <itunes:explicit> tag indicates whether your podcast contains explicit material. The two usable values for this tag are “yes” and “clean”.
+
+If you populate this tag with the “yes” value, indicating the presence of explicit content, an “explicit” parental advisory graphic will appear.
+
+If you populate this tag with the “clean” value, indicating that none of your podcast episodes contain explicit language or adult content, a “clean” parental advisory graphic will appear.
+
+If you populate this tag with any other value besides “yes” or “clean,” neither of the parental advisory graphics will appear and that space will remain blank.
+
+Note that podcasts that contain explicit material are not available in some iTunes Store territories.');
   t('The content of the <itunes:duration> tag is shown in the Time column in the List View on iTunes.
 
 The value provided for this tag can be formatted as HH:MM:SS, H:MM:SS, MM:SS, or M:SS, where H = hours, M = minutes, S = seconds. If a single number is provided as a value (no colons are used), the value is assumed to be in seconds. If one colon is present, the number to the left is assumed to be minutes, and the number to the right is assumed to be seconds. If more than two colons are present, the numbers farthest to the right are ignored.');
@@ -439,7 +539,9 @@ The itunes:image tag is also supported at the item (episode) level.
 
 For best results, we also recommend embedding the same cover art within the metadata for that episode’s media file prior to uploading to your host server. You may need to edit your media file via Garageband or other content-creation tool to do so.');
   t('iTunes: Author');
+  t('iTunes: Block');
   t('iTunes: Duration');
+  t('iTunes: Explicit');
   t('iTunes: Sub-title');
   t('iTunes: Summary');
 

@@ -34,6 +34,10 @@
       <itunes:explicit><?php print $podcast->field_itunes_explicit->value(); ?></itunes:explicit>
     <?php endif; ?>
 
+    <?php if (!empty($podcast->field_itunes_block->value())): ?>
+      <itunes:block><?php print $podcast->field_itunes_block->value(); ?></itunes:block>
+    <?php endif; ?>
+
     <?php if (!empty($podcast->field_itunes_owner->value())): ?>
       <itunes:owner>
         <?php if (!empty($podcast->field_itunes_owner->field_itunes_owner_name->value())): ?>
@@ -90,6 +94,10 @@
 
         <?php if (!empty($episode->field_itunes_duration->value())): ?>
           <itunes:duration><?php print $episode->field_itunes_duration->value(); ?></itunes:duration>
+        <?php endif; ?>
+
+        <?php if (!empty($episode->field_itunes_block->value())): ?>
+          <itunes:block><?php print $episode->field_itunes_block->value(); ?></itunes:block>
         <?php endif; ?>
 
       </item>
