@@ -67,7 +67,7 @@
 
     <?php foreach ($episodes as $episode): ?>
       <item>
-        <pubDate><?php print date('D, d M Y h:i:s e', $podcast->created->value()); ?></pubDate>
+        <pubDate><?php print date('D, j M Y h:i:s e', $podcast->created->value()); ?></pubDate>
 
         <?php if (!empty($episode->title->value())): ?>
           <title><?php print $episode->title->value(); ?></title>
