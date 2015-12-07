@@ -100,6 +100,28 @@ For best results, we also recommend embedding the same cover art within the meta
       'default_image' => 0,
       'file_directory' => 'podcast/image',
       'file_extensions' => 'png jpg jpeg',
+      'filefield_paths' => array(
+        'active_updating' => 0,
+        'file_name' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => '[node:field_name].[file:ffp-extension-original]',
+        ),
+        'file_path' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => 'podcast/images',
+        ),
+        'redirect' => FALSE,
+        'retroactive_update' => 0,
+      ),
+      'filefield_paths_enabled' => 1,
       'max_filesize' => '',
       'max_resolution' => '3000x3000',
       'min_resolution' => '1400x1400',
@@ -110,7 +132,7 @@ For best results, we also recommend embedding the same cover art within the meta
       'active' => 1,
       'module' => 'image',
       'settings' => array(
-        'preview_image_style' => 'large',
+        'preview_image_style' => 'medium',
         'progress_indicator' => 'bar',
       ),
       'type' => 'image_image',

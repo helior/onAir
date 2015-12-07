@@ -38,6 +38,28 @@ function onair_episode_field_default_field_instances() {
       'description_field' => 0,
       'file_directory' => 'episode/media',
       'file_extensions' => 'm4a mp3 mov mp4 m4v pdf epub',
+      'filefield_paths' => array(
+        'active_updating' => 1,
+        'file_name' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => 'p-[node:field-ref-podcast:field_name]--e-[node:nid]--[file:ffp-name-only-original].[file:ffp-extension-original]',
+        ),
+        'file_path' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => 'episode/media/[node:field_media_type]',
+        ),
+        'redirect' => FALSE,
+        'retroactive_update' => 0,
+      ),
+      'filefield_paths_enabled' => 1,
       'max_filesize' => '',
       'user_register_form' => FALSE,
     ),
@@ -100,8 +122,30 @@ For best results, we also recommend embedding the same cover art within the meta
     'settings' => array(
       'alt_field' => 0,
       'default_image' => 0,
-      'file_directory' => 'episode',
+      'file_directory' => 'episode/image',
       'file_extensions' => 'png jpg jpeg',
+      'filefield_paths' => array(
+        'active_updating' => 1,
+        'file_name' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => 'p-[node:field-ref-podcast:field_name]--e-[node:nid].[file:ffp-extension-original]',
+        ),
+        'file_path' => array(
+          'options' => array(
+            'pathauto' => FALSE,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => 'episode/images',
+        ),
+        'redirect' => FALSE,
+        'retroactive_update' => 0,
+      ),
+      'filefield_paths_enabled' => 1,
       'max_filesize' => '',
       'max_resolution' => '3000x3000',
       'min_resolution' => '1400x1400',

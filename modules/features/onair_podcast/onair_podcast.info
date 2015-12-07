@@ -4,6 +4,7 @@ package = onAir
 version = 7.x-1.0
 dependencies[] = entityreference
 dependencies[] = features
+dependencies[] = filefield_paths
 dependencies[] = image
 dependencies[] = itunes_fields
 dependencies[] = list
