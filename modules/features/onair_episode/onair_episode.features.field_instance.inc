@@ -36,7 +36,7 @@ function onair_episode_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'description_field' => 0,
-      'file_directory' => 'file/episode',
+      'file_directory' => 'episode/media',
       'file_extensions' => 'm4a mp3 mov mp4 m4v pdf epub',
       'max_filesize' => '',
       'user_register_form' => FALSE,
