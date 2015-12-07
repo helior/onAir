@@ -72,6 +72,12 @@
           <description><?php print $episode->field_itunes_summary->value(); ?></description>
         <?php endif; ?>
 
+        <?php if (!empty($episode->field_file->value())): ?>
+          <?php $file_url = file_create_url($episode->field_file->value()['uri']); ?>
+          <enclosure url="<?php print $file_url; ?>" length="<?php print $episode->field_file->value()['filesize']; ?>" type="<?php print $episode->field_file->value()['filemime'] ?>" />
+          <guid><?php print $file_url; ?></guid>
+        <?php endif; ?>
+
       </item>
     <?php endforeach; ?>
 

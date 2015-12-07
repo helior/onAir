@@ -8,6 +8,7 @@ projects[] = ctools
 projects[] = entity
 projects[] = entityreference
 projects[] = field_group
+projects[] = filefield_paths
 projects[] = file_entity
 projects[] = features
 projects[] = getid3
