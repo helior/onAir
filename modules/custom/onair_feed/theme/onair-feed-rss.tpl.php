@@ -111,6 +111,10 @@
         <?php if (!empty($episode->field_itunes_is_closed_caption->value())): ?>
           <itunes:isClosedCaptioned><?php print $episode->field_itunes_is_closed_caption->value(); ?></itunes:isClosedCaptioned>
         <?php endif; ?>
+
+        <?php if (!empty($episode->field_itunes_order->value())): ?>
+          <itunes:order><?php print $episode->field_itunes_order->value(); ?></itunes:order>
+        <?php endif; ?>
       </item>
     <?php endforeach; ?>
 

@@ -170,6 +170,21 @@ function itunes_fields_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_itunes_order'.
+  $field_bases['field_itunes_order'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_itunes_order',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_itunes_owner'.
   $field_bases['field_itunes_owner'] = array(
     'active' => 1,
