@@ -11,7 +11,6 @@ projects[] = field_group
 projects[] = filefield_paths
 projects[] = file_entity
 projects[] = features
-projects[] = getid3
 projects[] = libraries
 projects[] = navbar
 projects[] = s3fs
