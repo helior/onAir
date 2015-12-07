@@ -362,48 +362,6 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
     ),
   );
 
-  // Exported field_instance: 'node-episode-field_synopsis'.
-  $field_instances['node-episode-field_synopsis'] = array(
-    'bundle' => 'episode',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_synopsis',
-    'label' => 'Synopsis',
-    'required' => 0,
-    'settings' => array(
-      'display_summary' => 1,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-        'summary_rows' => 5,
-      ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => -4,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('File');
@@ -411,7 +369,6 @@ If a <itunes:summary> tag is not included, the contents of the <description> tag
   t('Media Type');
   t('Podcast');
   t('Show Notes');
-  t('Synopsis');
   t('The <itunes:image> tag points to the artwork for your podcast, via the URL specified in the <a href> attribute.
 
 Cover art must be in the JPEG or PNG file formats and in the RGB color space with a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels. Note that these requirements are different from the standard RSS image tag specification.
