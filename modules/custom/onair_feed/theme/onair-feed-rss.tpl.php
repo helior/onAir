@@ -55,6 +55,10 @@
           <title><?php print $episode->title->value(); ?></title>
         <?php endif; ?>
 
+        <?php if (!empty($episode->field_itunes_sub_title->value())): ?>
+          <itunes:subtitle><?php print $episode->field_itunes_sub_title->value(); ?></itunes:subtitle>
+        <?php endif; ?>
+
         <?php if (!empty($episode->field_itunes_author->value())): ?>
           <itunes:author><?php print $episode->field_itunes_author->value(); ?></itunes:author>
         <?php endif; ?>
