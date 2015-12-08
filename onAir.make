@@ -13,6 +13,7 @@ projects[] = file_entity
 projects[] = features
 projects[] = libraries
 projects[] = navbar
+projects[] = panels
 projects[] = s3fs
 projects[] = safeword
 projects[] = strongarm
