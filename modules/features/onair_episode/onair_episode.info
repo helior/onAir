@@ -1,6 +1,6 @@
 name = onAir Episode
 core = 7.x
-package = onAir
+package = onAir Core
 version = 7.x-1.0
 dependencies[] = entity_token
 dependencies[] = entityreference

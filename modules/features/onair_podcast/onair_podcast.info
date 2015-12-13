@@ -1,6 +1,6 @@
 name = onAir Podcast
 core = 7.x
-package = onAir
+package = onAir Core
 version = 7.x-1.0
 dependencies[] = entityreference
 dependencies[] = features
