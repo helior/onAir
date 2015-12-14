@@ -27,5 +27,12 @@ function onair_network_strongarm() {
   );
   $export['field_bundle_settings_node__network'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_network_pattern';
+  $strongarm->value = 'network/[node:title]';
+  $export['pathauto_node_network_pattern'] = $strongarm;
+
   return $export;
 }

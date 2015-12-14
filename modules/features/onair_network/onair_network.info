@@ -16,5 +16,6 @@ features[features_api][] = api:2
 features[field_instance][] = node-network-field_image
 features[node][] = network
 features[variable][] = field_bundle_settings_node__network
+features[variable][] = pathauto_node_network_pattern
 features[views_view][] = networks
 project path = profiles/onAir/modules/features

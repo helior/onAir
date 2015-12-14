@@ -14,6 +14,7 @@ projects[] = features
 projects[] = libraries
 projects[] = navbar
 projects[] = panels
+projects[] = pathauto
 projects[] = s3fs
 projects[] = safeword
 projects[] = strongarm
