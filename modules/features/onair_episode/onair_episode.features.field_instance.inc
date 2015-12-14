@@ -46,7 +46,7 @@ function onair_episode_field_default_field_instances() {
             'slashes' => 0,
             'transliterate' => 0,
           ),
-          'value' => 'p-[node:field-ref-podcast:field_name]--e-[node:nid]--[file:ffp-name-only-original].[file:ffp-extension-original]',
+          'value' => '[node:field-ref-podcast:field_name]--e[node:nid]--[file:ffp-name-only-original].[file:ffp-extension-original]',
         ),
         'file_path' => array(
           'options' => array(
@@ -132,7 +132,7 @@ For best results, we also recommend embedding the same cover art within the meta
             'slashes' => 0,
             'transliterate' => 0,
           ),
-          'value' => 'p-[node:field-ref-podcast:field_name]--e-[node:nid].[file:ffp-extension-original]',
+          'value' => '[node:field-ref-podcast:field_name]--e[node:nid].[file:ffp-extension-original]',
         ),
         'file_path' => array(
           'options' => array(
