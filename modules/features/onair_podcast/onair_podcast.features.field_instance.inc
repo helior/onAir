@@ -687,7 +687,7 @@ Within the newer browsing system based on Category links, including the Top Podc
     'entity_type' => 'node',
     'field_name' => 'field_ref_network',
     'label' => 'Network',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
