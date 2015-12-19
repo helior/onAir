@@ -1,0 +1,10 @@
+name = onAir Episode UI
+core = 7.x
+package = onAir UI
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = node_view__panel_context_35e2b92f-75aa-4eee-8c31-80776bc62950
+project path = profiles/onAir/modules/features
