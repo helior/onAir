@@ -1,0 +1,10 @@
+name = onAir Podcast UI
+core = 7.x
+package = onAir UI
+version = 7.x-1.0
+dependencies[] = ctools
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_handlers][] = node_view__panel_context_53058716-e490-42d9-8003-82c055641e54
+project path = profiles/onAir/modules/features
