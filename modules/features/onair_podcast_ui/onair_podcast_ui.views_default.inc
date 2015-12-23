@@ -31,10 +31,26 @@ function onair_podcast_ui_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'title' => 'title',
+    'created' => 'created',
+    'field_itunes_duration' => 'field_itunes_duration',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
     'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_itunes_duration' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -49,6 +65,21 @@ function onair_podcast_ui_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = '';
+  $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'M j, Y';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: Content: iTunes: Duration */
+  $handler->display->display_options['fields']['field_itunes_duration']['id'] = 'field_itunes_duration';
+  $handler->display->display_options['fields']['field_itunes_duration']['table'] = 'field_data_field_itunes_duration';
+  $handler->display->display_options['fields']['field_itunes_duration']['field'] = 'field_itunes_duration';
+  $handler->display->display_options['fields']['field_itunes_duration']['label'] = '';
+  $handler->display->display_options['fields']['field_itunes_duration']['element_label_colon'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
