@@ -6,9 +6,6 @@ A podcasting platform made with ♥.
   - `drush make --no-core --contrib-destination=. --yes onAir.make`
 
 ## TODOS:
-  - Configure/Export roles/permissions
-  - Re-enable S3 filesystem
-  - Better Admin UI
   - support HTML/CDATA in itunes:summary / show-notes
   - fix encoding of copyright symbol
   - Do not hard-code the language in feed template
