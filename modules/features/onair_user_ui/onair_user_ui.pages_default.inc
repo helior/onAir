@@ -132,7 +132,7 @@ function onair_user_ui_default_page_manager_handlers() {
       ),
     );
     $pane->configuration = array(
-      'content' => 'Create a podcast',
+      'content' => 'Create a podcast →',
       'href' => '/node/add/podcast',
     );
     $pane->cache = array();
