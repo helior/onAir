@@ -58,6 +58,10 @@ function onair_podcast_ui_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -111,6 +115,14 @@ function onair_podcast_ui_views_default_views() {
 
   /* Display: List */
   $handler = $view->new_display('panel_pane', 'List', 'list');
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No episodes have been added yet.';
+  $handler->display->display_options['empty']['area']['format'] = 'plain_text';
   $handler->display->display_options['argument_input'] = array(
     'field_ref_podcast_target_id' => array(
       'type' => 'context',

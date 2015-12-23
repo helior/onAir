@@ -26,7 +26,16 @@ function onair_podcast_ui_default_page_manager_handlers() {
     'body_classes_to_add' => '',
     'css_id' => '',
     'css' => '',
-    'contexts' => array(),
+    'contexts' => array(
+      0 => array(
+        'identifier' => 'User',
+        'keyword' => 'user',
+        'name' => 'user',
+        'type' => 'current',
+        'uid' => '',
+        'id' => 1,
+      ),
+    ),
     'relationships' => array(),
     'name' => '',
     'access' => array(
@@ -168,6 +177,42 @@ function onair_podcast_ui_default_page_manager_handlers() {
     $pane->uuid = 'cb1f1816-b730-4ba4-924c-c549c85c8bcf';
     $display->content['new-cb1f1816-b730-4ba4-924c-c549c85c8bcf'] = $pane;
     $display->panels['right'][1] = 'new-cb1f1816-b730-4ba4-924c-c549c85c8bcf';
+    $pane = new stdClass();
+    $pane->pid = 'new-6d8c285b-ac41-4e96-ada9-354223ce39aa';
+    $pane->panel = 'right';
+    $pane->type = 'link';
+    $pane->subtype = 'link';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'node_access',
+          'settings' => array(
+            'type' => 'update',
+          ),
+          'context' => array(
+            0 => 'logged-in-user',
+            1 => 'argument_entity_id:node_1',
+          ),
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'content' => 'Create an episode →',
+      'href' => '/node/add/episode',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $pane->uuid = '6d8c285b-ac41-4e96-ada9-354223ce39aa';
+    $display->content['new-6d8c285b-ac41-4e96-ada9-354223ce39aa'] = $pane;
+    $display->panels['right'][2] = 'new-6d8c285b-ac41-4e96-ada9-354223ce39aa';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

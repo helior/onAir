@@ -3,6 +3,7 @@ core = 7.x
 package = onAir UI
 version = 7.x-1.0
 dependencies[] = ctools
+dependencies[] = hap
 dependencies[] = onair_episode
 dependencies[] = onair_podcast
 dependencies[] = page_manager

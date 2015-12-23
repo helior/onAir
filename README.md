@@ -6,6 +6,7 @@ A podcasting platform made with ♥.
   - `drush make --no-core --contrib-destination=. --yes onAir.make`
 
 ## TODOS:
+  - Podcast reference; limit to owned podcasts
   - support HTML/CDATA in itunes:summary / show-notes
   - fix encoding of copyright symbol
   - Do not hard-code the language in feed template
