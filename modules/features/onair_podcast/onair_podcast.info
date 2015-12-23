@@ -10,6 +10,7 @@ dependencies[] = itunes_fields
 dependencies[] = list
 dependencies[] = multifield
 dependencies[] = node
+dependencies[] = onair_core
 dependencies[] = onair_fields
 dependencies[] = onair_network
 dependencies[] = onair_references
