@@ -11,3 +11,6 @@ A podcasting platform made with ♥.
   - Do not hard-code the language in feed template
   - auto-derive itunes:duration of media file
   - Audit logs
+
+## Installation playbook
+- Configure S3FS (access-key/secret-key/bucket-name)

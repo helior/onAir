@@ -7,4 +7,5 @@ dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[variable][] = page_manager_node_view_disabled
+features[variable][] = page_manager_user_view_disabled
 project path = profiles/onAir/modules/features
