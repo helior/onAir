@@ -15,6 +15,7 @@ projects[] = libraries
 projects[] = navbar
 projects[] = panels
 projects[] = pathauto
+projects[] = role_export
 projects[] = s3fs
 projects[] = safeword
 projects[] = strongarm
