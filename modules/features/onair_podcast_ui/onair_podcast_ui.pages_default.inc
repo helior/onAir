@@ -94,6 +94,30 @@ function onair_podcast_ui_default_page_manager_handlers() {
     $display->content['new-38476b4e-84f4-43dc-9c41-b780a99d3af8'] = $pane;
     $display->panels['left'][0] = 'new-38476b4e-84f4-43dc-9c41-b780a99d3af8';
     $pane = new stdClass();
+    $pane->pid = 'new-f7750266-7c8c-424b-a071-068cafe6fdd4';
+    $pane->panel = 'left';
+    $pane->type = 'feed_url';
+    $pane->subtype = 'feed_url';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'context' => 'argument_entity_id:node_1',
+      'override_title' => 1,
+      'override_title_text' => 'Feed URL',
+      'override_title_heading' => 'div',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = 'f7750266-7c8c-424b-a071-068cafe6fdd4';
+    $display->content['new-f7750266-7c8c-424b-a071-068cafe6fdd4'] = $pane;
+    $display->panels['left'][1] = 'new-f7750266-7c8c-424b-a071-068cafe6fdd4';
+    $pane = new stdClass();
     $pane->pid = 'new-417f94b1-6aa6-4bae-8eae-f446e6af944a';
     $pane->panel = 'right';
     $pane->type = 'node_title';
