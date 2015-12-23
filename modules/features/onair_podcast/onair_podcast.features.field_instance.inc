@@ -104,7 +104,7 @@ For best results, we also recommend embedding the same cover art within the meta
         'active_updating' => 0,
         'file_name' => array(
           'options' => array(
-            'pathauto' => FALSE,
+            'pathauto' => 0,
             'slashes' => 0,
             'transliterate' => 0,
           ),
@@ -112,7 +112,7 @@ For best results, we also recommend embedding the same cover art within the meta
         ),
         'file_path' => array(
           'options' => array(
-            'pathauto' => FALSE,
+            'pathauto' => 0,
             'slashes' => 0,
             'transliterate' => 0,
           ),
