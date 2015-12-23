@@ -92,8 +92,7 @@ function onair_podcast_views_default_views() {
   $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
   $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area_text_custom']['content'] = 'You haven\'t created any podcasts yet :\'(
-<a href="/node/add/podcast">Create a podcast now</a>!!';
+  $handler->display->display_options['empty']['area_text_custom']['content'] = 'You haven\'t created any podcasts yet :\'(';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Author uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
