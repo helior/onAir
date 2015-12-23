@@ -6,6 +6,7 @@ dependencies[] = ctools
 dependencies[] = hap
 dependencies[] = onair_podcast
 dependencies[] = page_manager
+dependencies[] = panels
 features[ctools][] = page_manager:pages_default:1
 features[features_api][] = api:2
 features[page_manager_handlers][] = user_view__panel_context_c4648ca0-0720-4597-8234-25c03da86cad

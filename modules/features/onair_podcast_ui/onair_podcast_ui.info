@@ -7,6 +7,7 @@ dependencies[] = hap
 dependencies[] = onair_episode
 dependencies[] = onair_podcast
 dependencies[] = page_manager
+dependencies[] = panels
 dependencies[] = views
 dependencies[] = views_content
 features[ctools][] = page_manager:pages_default:1

@@ -6,6 +6,7 @@ dependencies[] = ctools
 dependencies[] = onair_network
 dependencies[] = onair_podcast
 dependencies[] = page_manager
+dependencies[] = panels
 features[ctools][] = page_manager:pages_default:1
 features[features_api][] = api:2
 features[page_manager_pages][] = networks

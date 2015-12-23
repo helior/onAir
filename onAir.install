@@ -10,6 +10,7 @@ function onAir_install() {
     'onair_episode_ui',
     'onair_network_ui',
     'onair_podcast_ui',
+    'onair_user_ui',
 
     // Development
     'field_ui'
