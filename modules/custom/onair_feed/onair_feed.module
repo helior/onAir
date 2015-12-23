@@ -3,6 +3,15 @@
  * @file onair_feed.module
  */
 
+ /**
+  * Implements hook_ctools_plugin_directory().
+  */
+ function onair_feed_ctools_plugin_directory($owner, $api) {
+   if (in_array($owner, array('ctools'))) {
+     return "plugins/$owner/$api";
+   }
+ }
+
 /**
  * Implements hook_menu.
  */
