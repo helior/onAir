@@ -31,3 +31,15 @@ function onair_feed_theme($existing, $type, $theme, $path) {
   );
   return $themes;
 }
+
+/**
+ * Helper function to generate feed URL of a given podcast object.
+ */
+function onair_feed_feed_url($entity) {
+  $podcast = entity_metadata_wrapper('node', $entity);
+
+  if (!empty($podcast->field_name->value())) {
+    $path = "feed/{$podcast->field_name->value()['machine']}/rss.xml";
+    return url($path, array('absolute' => TRUE));
+  }
+}
