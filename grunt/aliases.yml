@@ -1,0 +1,6 @@
+build_core:
+  - 'shell:dist_make'
+build_profile:
+  - 'shell:profile_make'
+install_drupal:
+  - 'shell:install'
