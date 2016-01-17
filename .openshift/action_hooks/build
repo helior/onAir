@@ -30,6 +30,10 @@ else
 fi
 
 # Install Drush Make Local
+if [ ! -d $DRUSH_COMMANDS_DIR ]; then
+  mkdir -p $DRUSH_COMMANDS_DIR
+fi
+
 if [ -e "$DRUSH_COMMANDS_DIR/make_local" ]; then
   echo "Drush Make Local already installed.."
 else
