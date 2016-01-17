@@ -6,6 +6,37 @@
 
 set -e
 
+DRUSH_COMMANDS_DIR="/usr/share/drush/commands"
+DRUSH_MAKE_PKG_NAME="make_local-7.x-1.1"
+
+#######################################
+# Install Drush + extensions
+if command -v drush >/dev/null 2>&1; then
+  echo "Drush already installed.."
+else
+  # Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
+  wget http://files.drush.org/drush.phar
+  # Or use our upcoming release: wget http://files.drush.org/drush-unstable.phar
+
+  # Test your install.
+  php drush.phar core-status
+
+  # Rename to `drush` instead of `php drush.phar`. Destination can be anywhere on $PATH.
+  chmod +x drush.phar
+  sudo mv drush.phar /usr/local/bin/drush
+
+  # Enrich the bash startup file with completion and aliases.
+  drush init
+fi
+
+# Install Drush Make Local
+if [ -e "$DRUSH_COMMANDS_DIR/make_local" ]; then
+  echo "Drush Make Local already installed.."
+else
+  drush dl $DRUSH_MAKE_PKG_NAME --destination=$DRUSH_COMMANDS_DIR
+fi
+#######################################
+
 #
 # The PHP dir most be controlled by Drupal content
 #
