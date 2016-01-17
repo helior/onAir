@@ -5,6 +5,7 @@
 # could be python, php, ruby, etc.
 
 set -e
+env
 
 DRUSH_COMMANDS_DIR="/usr/share/drush/commands"
 DRUSH_MAKE_PKG_NAME="make_local-7.x-1.1"
@@ -30,14 +31,10 @@ else
 fi
 
 # Install Drush Make Local
-if [ ! -d $DRUSH_COMMANDS_DIR ]; then
-  mkdir -p $DRUSH_COMMANDS_DIR
-fi
-
-if [ -e "$DRUSH_COMMANDS_DIR/make_local" ]; then
+if [ -e "$OPENSHIFT_HOMEDIR/.drush/make_local" ]; then
   echo "Drush Make Local already installed.."
 else
-  drush dl $DRUSH_MAKE_PKG_NAME --destination=$DRUSH_COMMANDS_DIR
+  drush dl $DRUSH_MAKE_PKG_NAME --yes
 fi
 #######################################
 
