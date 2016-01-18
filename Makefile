@@ -6,7 +6,8 @@ clean:
 	rm -rf onAir.tar.gz
 
 build:
-	grunt build_core
+	drush make onair-site.make docroot
+	grunt copy
 
 package:
 	tar -czf onAir.tar.gz docroot
