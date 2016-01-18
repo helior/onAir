@@ -1,14 +1,11 @@
 module.exports =
   dist_make:
-    command: [
-      'rm -rf docroot'
-      'drush make onair-site.make docroot'
-    ].join('&&')
+    command: 'drush make onair-site.make docroot'
   profile_make:
     command: 'drush make --no-core --contrib-destination=. --yes onair.make'
     options:
       execOptions:
-        cwd: 'src/epistemo'
+        cwd: 'src/onAir'
   install:
     command: 'drush si onair --account-name=admin --account-pass=admin --site-name=onAir -y'
     options:
