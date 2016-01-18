@@ -6,12 +6,8 @@ function install_drush() {
   if command -v drush >/dev/null 2>&1; then
     echo "Drush already installed.."
   else
-    export PATH="$PATH:$HOME/.composer/vendor/bin"
     composer self-update
     composer global require drush/drush:8.*
-    which drush
-    whereis drush
-    env
   fi
 
 }
