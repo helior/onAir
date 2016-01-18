@@ -1,13 +1,11 @@
 #!/bin/bash
 
-DRUSH_MAKE_PKG_NAME="make_local-7.x-1.1"
-
 function install_drush() {
   if command -v drush >/dev/null 2>&1; then
     echo "Drush already installed.."
   else
     composer self-update
-    composer global require drush/drush:6.*
+    composer global require drush/drush:8.*
   fi
 
 }
