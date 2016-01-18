@@ -7,7 +7,7 @@ function install_drush() {
     echo "Drush already installed.."
   else
     composer self-update
-    composer global require drush/drush:8.*
+    composer global require drush/drush:6.*
   fi
 
 }
