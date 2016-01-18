@@ -1,5 +1,7 @@
 build_core:
   - 'shell:dist_make'
+  - 'copy:drush'
+  - 'copy:settings'
 build_profile:
   - 'shell:profile_make'
 install_drupal:
