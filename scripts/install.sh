@@ -12,16 +12,6 @@ function install_drush() {
 
 }
 
-# Install Drush Make Local
-function install_drush_make_local() {
-  if [ -e "$HOME/.drush/make_local" ]; then
-    echo "Drush Make Local already installed.."
-  else
-    drush dl $DRUSH_MAKE_PKG_NAME --yes
-  fi
-
-}
-
 function install_dependencies() {
   echo "Installing Grunt CLI.."
   npm install -g grunt-cli
@@ -31,9 +21,6 @@ function install_dependencies() {
 
   echo "Installing Drush.."
   install_drush
-
-  echo "Installing Make Local.."
-  install_drush_make_local
 }
 
 
