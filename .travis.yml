@@ -1,0 +1,22 @@
+sudo: false
+language: php
+php:
+- '5.5'
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.drush/cache
+install: true
+script: ./scripts/travis-script.sh
+before_deploy:
+- make install
+- make clean
+- make build
+- make package
+deploy:
+  provider: releases
+  api_key: "$GH_TOKEN"
+  file: onAir.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
