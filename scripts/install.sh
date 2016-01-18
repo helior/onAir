@@ -8,7 +8,10 @@ function install_drush() {
   else
     export PATH="$PATH:$HOME/.composer/vendor/bin"
     composer self-update
-    composer global require drush/drush:7.*
+    composer global require drush/drush:8.*
+    which drush
+    whereis drush
+    env
   fi
 
 }
