@@ -6,6 +6,8 @@ clean:
 	rm -rf onAir.tar.gz
 
 build:
+	echo "target: build///"
+	which drush
 	drush make onair-site.make docroot
 	grunt copy
 

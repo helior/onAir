@@ -6,6 +6,9 @@ cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.drush/cache
+env:
+  global:
+    - PATH="$PATH:$HOME/.composer/vendor/bin"
 install: true
 script: ./scripts/travis-script.sh
 before_deploy:
