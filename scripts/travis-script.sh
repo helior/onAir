@@ -1,4 +1,5 @@
 #!/bin/bash
+source scripts/helper.sh
 
 set -e
 
