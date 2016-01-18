@@ -6,5 +6,5 @@ projects[drupal][version] = 7.41
 
 projects[onair][type] = profile
 projects[onair][download][type] = copy
-projects[onair][download][url] = src/onair
+projects[onair][download][url] = src/onAir
 projects[onair][version] = 7.x-1.x
