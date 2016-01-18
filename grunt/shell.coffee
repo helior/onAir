@@ -1,6 +1,4 @@
 module.exports =
-  dist_make:
-    command: 'drush make onair-site.make docroot'
   profile_make:
     command: 'drush make --no-core --contrib-destination=. --yes onair.make'
     options:
