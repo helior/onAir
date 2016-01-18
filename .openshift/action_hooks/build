@@ -6,18 +6,47 @@
 
 set -e
 
+export CUSTOM_REPO_SLUG="helior/onAIr"
+export CUSTOM_TAR_NAME="onAir.tar.gz"
+
 env
 
-#
-# The PHP dir most be controlled by Drupal content
-#
-if [ -e "${OPENSHIFT_REPO_DIR}php" -a ! -h "${OPENSHIFT_REPO_DIR}php" ]
-then
-  echo "ERROR: The 'php' directory in your Git repo prevents Drupal from being installed.  Please remove 'php' and push again."
+# Warn about the PHP directory being the webroot.
+if [ -e "${OPENSHIFT_REPO_DIR}php" -a ! -h "${OPENSHIFT_REPO_DIR}php" ]; then
+  echo "ERROR: The 'php' directory (specifically ${OPENSHIFT_REPO_DIR}php) is used in OpenShift as the webroot. Please remove it from the Git repository, as it is preventing deployments."
   exit 5
 fi
 
-DRUPAL_DIR=${OPENSHIFT_DATA_DIR}drupal
+# Instantiate the download directory
+if [ ! -d "${OPENSHIFT_DATA_DIR}downloads" ]; then
+  echo "Creating downloads directory for the first time..."
+  mkdir -p "${OPENSHIFT_DATA_DIR}downloads"
+fi
+
+# Fail if deployment tag is not set.
+if [ -z ${CUSTOM_DEPLOY_TAG+x} ]; then
+  echo "ERROR: ENV variable CUSTOM_DEPLOY_TAG is not set!! We don't know what to deploy! Please set it to a valid release tag from Github."
+  exit 5
+fi
+
+if [ -d "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}" ]; then
+  echo "NOTICE: Version ${CUSTOM_DEPLOY_TAG} has already been downloaded."
+else
+  echo "Downloading ${CUSTOM_DEPLOY_TAG}..."
+  CUSTOM_DEPLOY_DOWNLOAD_URL="https://github.com/${CUSTOM_REPO_SLUG}/releases/download/${CUSTOM_DEPLOY_TAG}/${CUSTOM_TAR_NAME}"
+
+  wget $CUSTOM_DEPLOY_DOWNLOAD_URL --directory-prefix=${OPENSHIFT_TMP_DIR}
+
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Could not download '${CUSTOM_DEPLOY_DOWNLOAD_URL}'; please make sure this path is correct."
+    exit 7
+  fi
+
+  mkdir -p "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+  tar xpfv "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+  rm -rf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME"
+fi
+
 DRUPAL_SITE_DIR=${OPENSHIFT_DATA_DIR}sites
 
 echo
