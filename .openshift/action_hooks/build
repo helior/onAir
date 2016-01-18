@@ -9,18 +9,89 @@ set -e
 export CUSTOM_REPO_SLUG="helior/onAIr"
 export CUSTOM_TAR_NAME="onAir.tar.gz"
 
-env
+export DRUPAL_SETTINGS="${OPENSHIFT_DATA_DIR}settings.local.php"
+export DRUPAL_FILES_DIR="${OPENSHIFT_DATA_DIR}files"
+export DRUPAL_PRIVATE_DIR="${OPENSHIFT_DATA_DIR}private"
+export DRUPAL_TEMP_DIR="${OPENSHIFT_TMP_DIR}drupal"
 
-# Warn about the PHP directory being the webroot.
-if [ -e "${OPENSHIFT_REPO_DIR}php" -a ! -h "${OPENSHIFT_REPO_DIR}php" ]; then
-  echo "ERROR: The 'php' directory (specifically ${OPENSHIFT_REPO_DIR}php) is used in OpenShift as the webroot. Please remove it from the Git repository, as it is preventing deployments."
-  exit 5
-fi
+# env
 
 # Instantiate the download directory
 if [ ! -d "${OPENSHIFT_DATA_DIR}downloads" ]; then
   echo "Creating downloads directory for the first time..."
   mkdir -p "${OPENSHIFT_DATA_DIR}downloads"
+fi
+
+# Instantiate local settings file.
+if [ ! -f $DRUPAL_SETTINGS ]; then
+  echo "Creating settings.local.php for the first time..."
+  echo "If you want to re-run this setup, delete the file: ${DRUPAL_SETTINGS}"
+
+  echo "Cleaning up, just in case we're doing this a second time around..."
+  rm -rf ${DRUPAL_FILES_DIR}
+  rm -rf ${DRUPAL_PRIVATE_DIR}
+
+  if [ -z "$OPENSHIFT_MYSQL_DB_HOST" ]; then
+    echo 1>&2
+    echo "Could not find mysql database. Please run:" 1>&2
+    echo "rhc cartridge add mysql -a $OPENSHIFT_APP_NAME" 1>&2
+    echo "then make a sample commit (add whitespace somewhere) and re-push" 1>&2
+    echo 1>&2
+    exit 5
+  fi
+  if [ -z "$OPENSHIFT_MYSQL_DB_PORT" ]; then
+    exit 6
+  fi
+
+  echo "Creating file directories for the first time..."
+  mkdir -p ${DRUPAL_FILES_DIR}
+  mkdir -p ${DRUPAL_PRIVATE_DIR}
+  chmod u+w ${DRUPAL_FILES_DIR}
+
+  touch ${DRUPAL_SETTINGS}
+  cat << "END" > "${OPENSHIFT_TMP_DIR}/settings.local.php"
+
+/**
+ * For maximum portability, use the OpenShift environment variables.
+ */
+
+// When run from Drush, only $_ENV is available.  Might be a bug
+if (array_key_exists('OPENSHIFT_APP_NAME', $_SERVER)) {
+  $src = $_SERVER;
+} else {
+  $src = $_ENV;
+}
+$databases = array (
+  'default' =>
+  array (
+    'default' =>
+    array (
+      'database' => $src['OPENSHIFT_APP_NAME'],
+      'username' => $src['OPENSHIFT_MYSQL_DB_USERNAME'],
+      'password' => $src['OPENSHIFT_MYSQL_DB_PASSWORD'],
+      'host' => $src['OPENSHIFT_MYSQL_DB_HOST'],
+      'port' => $src['OPENSHIFT_MYSQL_DB_PORT'],
+      'driver' => 'mysql',
+      'prefix' => '',
+    ),
+  ),
+);
+END
+  cat "${OPENSHIFT_TMP_DIR}/settings.local.php" > ${DRUPAL_SETTINGS}
+  rm -rf "${OPENSHIFT_TMP_DIR}/settings.local.php"
+
+  echo "\$scheme = !empty(\$src['HTTPS']) ? 'https' : 'http';" >> ${DRUPAL_SETTINGS}
+  echo "\$base_url = \$scheme . '://' . \$src['HTTP_HOST'];" >> ${DRUPAL_SETTINGS}
+  echo "\$conf['file_private_path'] = \$src['DRUPAL_PRIVATE_DIR'];" >> ${DRUPAL_SETTINGS}
+  echo "\$conf['file_temporary_path'] = \$src['DRUPAL_TEMP_DIR'];" >> ${DRUPAL_SETTINGS}
+
+  echo "Finished creating ${DRUPAL_SETTINGS} file..."
+fi
+
+# Warn about the PHP directory being the webroot.
+if [ -e "${OPENSHIFT_REPO_DIR}php" -a ! -h "${OPENSHIFT_REPO_DIR}php" ]; then
+  echo "ERROR: The 'php' directory (specifically ${OPENSHIFT_REPO_DIR}php) is used in OpenShift as the webroot. Please remove it from the Git repository, as it is preventing deployments."
+  exit 5
 fi
 
 # Fail if deployment tag is not set.
@@ -43,7 +114,9 @@ else
   fi
 
   mkdir -p "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
-  tar xpfv "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+
+  echo "Moving downloaded artifact to ${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}..."
+  tar xpf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
   rm -rf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME"
 fi
 
