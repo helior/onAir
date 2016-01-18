@@ -5,7 +5,8 @@
 # could be python, php, ruby, etc.
 
 set -e
-ENV
+
+env
 
 #
 # The PHP dir most be controlled by Drupal content
