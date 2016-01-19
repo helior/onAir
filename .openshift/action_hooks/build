@@ -8,6 +8,7 @@ set -e
 
 export CUSTOM_REPO_SLUG="helior/onAir"
 export CUSTOM_TAR_NAME="onAir.tar.gz"
+export CUSTOM_WEBROOT="${OPENSHIFT_REPO_DIR}php"
 
 export DRUPAL_SETTINGS="${OPENSHIFT_DATA_DIR}settings.local.php"
 export DRUPAL_FILES_DIR="${OPENSHIFT_DATA_DIR}files"
@@ -16,13 +17,17 @@ export DRUPAL_TEMP_DIR="${OPENSHIFT_TMP_DIR}drupal"
 
 # env
 
-# Instantiate the download directory
+# Create the downloads directory if it doesn't exist yet.
 if [ ! -d "${OPENSHIFT_DATA_DIR}downloads" ]; then
   echo "Creating downloads directory for the first time..."
   mkdir -p "${OPENSHIFT_DATA_DIR}downloads"
 fi
 
-# Instantiate local settings file.
+# Create Drupal's setting file that contains configuration to integrate with the
+# infrastructure (OpenShift in this case). We'll persist this file in a common
+# location and later symbolically link it to each release. We'll use the
+# existance of this file to determine if other support files have been created
+# already (files directory, et al.)
 if [ ! -f $DRUPAL_SETTINGS ]; then
   echo "Creating settings.local.php for the first time..."
   echo "If you want to re-run this setup, delete the file: ${DRUPAL_SETTINGS}"
@@ -31,7 +36,8 @@ if [ ! -f $DRUPAL_SETTINGS ]; then
   rm -rf ${DRUPAL_FILES_DIR}
   rm -rf ${DRUPAL_PRIVATE_DIR}
 
-  if [ -z "$OPENSHIFT_MYSQL_DB_HOST" ]; then
+  # If MySQL is not available yet, exit early and notify the user.
+  if [ -z "$OPENSHIFT_MYSQL_DB_HOST" ] || [ -z "$OPENSHIFT_MYSQL_DB_PORT" ]; then
     echo 1>&2
     echo "Could not find mysql database. Please run:" 1>&2
     echo "rhc cartridge add mysql -a $OPENSHIFT_APP_NAME" 1>&2
@@ -39,83 +45,98 @@ if [ ! -f $DRUPAL_SETTINGS ]; then
     echo 1>&2
     exit 5
   fi
-  if [ -z "$OPENSHIFT_MYSQL_DB_PORT" ]; then
-    exit 6
-  fi
 
   echo "Creating file directories for the first time..."
   mkdir -p ${DRUPAL_FILES_DIR}
   mkdir -p ${DRUPAL_PRIVATE_DIR}
   chmod u+w ${DRUPAL_FILES_DIR}
 
+  echo "Generating a settings.local.php file..."
   touch ${DRUPAL_SETTINGS}
-  cat << "END" > "${OPENSHIFT_TMP_DIR}/settings.local.php"
+  cat << EOF > "${OPENSHIFT_TMP_DIR}/settings.local.php"
 <?php
+
 /**
  * For maximum portability, use the OpenShift environment variables.
  */
 
 // When run from Drush, only $_ENV is available.  Might be a bug
-if (array_key_exists('OPENSHIFT_APP_NAME', $_SERVER)) {
-  $src = $_SERVER;
+if (array_key_exists('OPENSHIFT_APP_NAME', \$_SERVER)) {
+  \$src = \$_SERVER;
 } else {
-  $src = $_ENV;
+  \$src = \$_ENV;
 }
-$databases = array (
+\$databases = array (
   'default' =>
   array (
     'default' =>
     array (
-      'database' => $src['OPENSHIFT_APP_NAME'],
-      'username' => $src['OPENSHIFT_MYSQL_DB_USERNAME'],
-      'password' => $src['OPENSHIFT_MYSQL_DB_PASSWORD'],
-      'host' => $src['OPENSHIFT_MYSQL_DB_HOST'],
-      'port' => $src['OPENSHIFT_MYSQL_DB_PORT'],
+      'database' => \$src['OPENSHIFT_APP_NAME'],
+      'username' => \$src['OPENSHIFT_MYSQL_DB_USERNAME'],
+      'password' => \$src['OPENSHIFT_MYSQL_DB_PASSWORD'],
+      'host' => \$src['OPENSHIFT_MYSQL_DB_HOST'],
+      'port' => \$src['OPENSHIFT_MYSQL_DB_PORT'],
       'driver' => 'mysql',
       'prefix' => '',
     ),
   ),
 );
-END
+
+\$scheme = !empty(\$src['HTTPS']) ? 'https' : 'http';
+\$base_url = \$scheme . '://' . \$src['HTTP_HOST'];
+\$conf['file_private_path'] = '${DRUPAL_PRIVATE_DIR}';
+\$conf['file_temporary_path'] = '${DRUPAL_TEMP_DIR}';
+EOF
   cat "${OPENSHIFT_TMP_DIR}/settings.local.php" > ${DRUPAL_SETTINGS}
   rm -rf "${OPENSHIFT_TMP_DIR}/settings.local.php"
 
-  echo "\$scheme = !empty(\$src['HTTPS']) ? 'https' : 'http';" >> ${DRUPAL_SETTINGS}
-  echo "\$base_url = \$scheme . '://' . \$src['HTTP_HOST'];" >> ${DRUPAL_SETTINGS}
-  echo "\$conf['file_private_path'] = \$src['DRUPAL_PRIVATE_DIR'];" >> ${DRUPAL_SETTINGS}
-  echo "\$conf['file_temporary_path'] = \$src['DRUPAL_TEMP_DIR'];" >> ${DRUPAL_SETTINGS}
-
-  echo "Finished creating ${DRUPAL_SETTINGS} file..."
+  echo "Finished creating ${DRUPAL_SETTINGS} file; one-time setup complete..."
 fi
 
-# Warn about the PHP directory being the webroot.
-if [ -e "${OPENSHIFT_REPO_DIR}php" -a ! -h "${OPENSHIFT_REPO_DIR}php" ]; then
-  echo "ERROR: The 'php' directory (specifically ${OPENSHIFT_REPO_DIR}php) is used in OpenShift as the webroot. Please remove it from the Git repository, as it is preventing deployments."
+# This is rather random, but OpenShift uses a "php" directory in the repository
+# as the webroot. We'll need to manage what the webroot points to at the
+# deployment layer, so we'll notify the user to not use a php directory in the
+# repo. Again, so random.
+if [ -e ${CUSTOM_WEBROOT} -a ! -h ${CUSTOM_WEBROOT} ]; then
+  echo "ERROR: The 'php' directory (specifically ${CUSTOM_WEBROOT}) is used in OpenShift as the webroot. Please remove it from the Git repository, as it is preventing deployments."
   exit 5
 fi
 
-# Fail if deployment tag is not set.
-if [ -z ${CUSTOM_DEPLOY_TAG+x} ]; then
-  echo "ERROR: ENV variable CUSTOM_DEPLOY_TAG is not set!! We don't know what to deploy! Please set it to a valid release tag from Github."
+# Now that everything is in its right place, let's start managing deployment
+# artifacts. We'll keep artifacts in their own respective directory and
+# symbolically link the webroot with the desired release.
+#
+# We diverge a little from the way OpenShift does deployments for a couple of
+# reasons: first, OpenShift is not a great environment for creating builds – we
+# defer to Travis CI for that; secondly, we can't rely on the ref from
+# `rhc deploy <ref>` since for whatever reason, we don't know at run-time what
+# that ref is! So as a work around, we have the user define an environment
+# variable to determine which release tag we will download from the Github
+# Releases artifact server.
+#
+# First things first: Fail if the release tag has not been set.
+if [ -z ${RELEASE_TAG+x} ]; then
+  echo "ERROR: ENV variable RELEASE_TAG is not set!! We don't know what to deploy! Please set a valid release tag from Github by running:"  1>&2
+  echo "rhc env set RELEASE_TAG=v1.2.3 -a ${OPENSHIFT_APP_NAME}" 1>&2
   exit 5
 fi
 
-if [ -d "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}" ]; then
-  CUSTOM_CURRENT_INSTALL_DIR=$(readlink -f ${OPENSHIFT_DATA_DIR}downloads/current)
-  echo "NOTICE: Version ${CUSTOM_DEPLOY_TAG} has already been downloaded."
+if [ -d "${OPENSHIFT_DATA_DIR}downloads/${RELEASE_TAG}" ]; then
+  CUSTOM_CURRENT_INSTALL_DIR=$(readlink -f ${CUSTOM_WEBROOT})
+  echo "NOTICE: Version ${RELEASE_TAG} has already been downloaded."
   echo "NOTICE: Drupal is currently installed at $CUSTOM_CURRENT_INSTALL_DIR"
 else
-  echo "Downloading ${CUSTOM_DEPLOY_TAG}..."
-  CUSTOM_DEPLOY_DOWNLOAD_URL="https://github.com/${CUSTOM_REPO_SLUG}/releases/download/${CUSTOM_DEPLOY_TAG}/${CUSTOM_TAR_NAME}"
+  echo "Downloading ${RELEASE_TAG}..."
+  CUSTOM_DEPLOY_DOWNLOAD_URL="https://github.com/${CUSTOM_REPO_SLUG}/releases/download/${RELEASE_TAG}/${CUSTOM_TAR_NAME}"
 
   wget $CUSTOM_DEPLOY_DOWNLOAD_URL --directory-prefix=${OPENSHIFT_TMP_DIR}
 
   if [ $? -ne 0 ]; then
-    echo "ERROR: Could not download '${CUSTOM_DEPLOY_DOWNLOAD_URL}'; please make sure this path is correct."
+    echo "ERROR: Could not download '${CUSTOM_DEPLOY_DOWNLOAD_URL}'; please make sure this release exists."
     exit 7
   fi
 
-  CUSTOM_CURRENT_DEPLOY_PATH="${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+  CUSTOM_CURRENT_DEPLOY_PATH="${OPENSHIFT_DATA_DIR}downloads/${RELEASE_TAG}"
   echo "Moving downloaded artifact to ${CUSTOM_CURRENT_DEPLOY_PATH}..."
   mkdir -p "${CUSTOM_CURRENT_DEPLOY_PATH}"
   tar xpf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${CUSTOM_CURRENT_DEPLOY_PATH}" --strip-components 1
@@ -139,69 +160,71 @@ else
 fi
 
 # TODO: Symbolic link deployed artifact to current
+ln -sfn $CUSTOM_CURRENT_DEPLOY_PATH $CUSTOM_WEBROOT
+
 #-----------------------------------------------------------------------
-DRUPAL_SITE_DIR=${OPENSHIFT_DATA_DIR}sites
-
-echo
-
+# DRUPAL_SITE_DIR=${OPENSHIFT_DATA_DIR}sites
 #
-# If there is no current download of Drupal, create one.
+# echo
 #
-if [ ! -d "${OPENSHIFT_DATA_DIR}downloads/current" ]
-then
-  mkdir -p ${OPENSHIFT_TMP_DIR}drupal
-
-  echo "Download and install the latest stable version of Drupal"
-  echo
-
-  mkdir -p ${OPENSHIFT_DATA_DIR}downloads
-  if ! drush dl drupal --destination=${OPENSHIFT_DATA_DIR}downloads --yes
-  then
-    echo "ERROR: Unable download and install Drupal."
-    exit 7
-  fi
-
-  #
-  # Link the /current symlink to the latest Drupal instance
-  #
-  rm -f ${OPENSHIFT_DATA_DIR}downloads/current
-  LATEST=$(ls -1t ${OPENSHIFT_DATA_DIR}downloads | head -1)
-  export DRUPAL_INSTALL_DIR="${OPENSHIFT_DATA_DIR}downloads/${LATEST}"
-  ln -s ${LATEST} ${OPENSHIFT_DATA_DIR}downloads/current
-
-  mv $DRUPAL_INSTALL_DIR/sites $DRUPAL_INSTALL_DIR/sites.original
-
-  #
-  # Ensure there is a default health check
-  #
-  # cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${DRUPAL_INSTALL_DIR}
-  # patch ${DRUPAL_INSTALL_DIR}/.htaccess < ${OPENSHIFT_REPO_DIR}.openshift/.htaccess.patch
-
-  echo "Drupal installed to $DRUPAL_INSTALL_DIR"
-else
-  DRUPAL_INSTALL_DIR=$(readlink -f ${OPENSHIFT_DATA_DIR}downloads/current)
-  echo "Drupal is already installed at $DRUPAL_INSTALL_DIR"
-fi
-
-echo
-
+# #
+# # If there is no current download of Drupal, create one.
+# #
+# if [ ! -d "${OPENSHIFT_DATA_DIR}downloads/current" ]
+# then
+#   mkdir -p ${OPENSHIFT_TMP_DIR}drupal
 #
-# Link the /sites directory (where Drupal stores modules and files)
-# into the install dir in order to keep it easily accessible.
-#/
-if [ ! -d "$DRUPAL_SITE_DIR" ]
-then
-  cp -r $DRUPAL_INSTALL_DIR/sites.original $DRUPAL_SITE_DIR
-  ln -sfn ../../sites $DRUPAL_INSTALL_DIR/sites
-fi
-
+#   echo "Download and install the latest stable version of Drupal"
+#   echo
 #
-# Ensure that the app-root/runtime/repo/php PHP directory points
-# to a valid Drupal instance directory
+#   mkdir -p ${OPENSHIFT_DATA_DIR}downloads
+#   if ! drush dl drupal --destination=${OPENSHIFT_DATA_DIR}downloads --yes
+#   then
+#     echo "ERROR: Unable download and install Drupal."
+#     exit 7
+#   fi
 #
-ln -sfn ../../data/downloads/current ${OPENSHIFT_REPO_DIR}php
-if [ ! -d "${OPENSHIFT_REPO_DIR}php" ]
-then
-  echo "ERROR: Unable to link the PHP directory, as the current Drupal instance is not a valid directory."
-  exit 8
-fi
+#   #
+#   # Link the /current symlink to the latest Drupal instance
+#   #
+#   rm -f ${OPENSHIFT_DATA_DIR}downloads/current
+#   LATEST=$(ls -1t ${OPENSHIFT_DATA_DIR}downloads | head -1)
+#   export DRUPAL_INSTALL_DIR="${OPENSHIFT_DATA_DIR}downloads/${LATEST}"
+#   ln -s ${LATEST} ${OPENSHIFT_DATA_DIR}downloads/current
+#
+#   mv $DRUPAL_INSTALL_DIR/sites $DRUPAL_INSTALL_DIR/sites.original
+#
+#   #
+#   # Ensure there is a default health check
+#   #
+#   # cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${DRUPAL_INSTALL_DIR}
+#   # patch ${DRUPAL_INSTALL_DIR}/.htaccess < ${OPENSHIFT_REPO_DIR}.openshift/.htaccess.patch
+#
+#   echo "Drupal installed to $DRUPAL_INSTALL_DIR"
+# else
+#   DRUPAL_INSTALL_DIR=$(readlink -f ${OPENSHIFT_DATA_DIR}downloads/current)
+#   echo "Drupal is already installed at $DRUPAL_INSTALL_DIR"
+# fi
+#
+# echo
+#
+# #
+# # Link the /sites directory (where Drupal stores modules and files)
+# # into the install dir in order to keep it easily accessible.
+# #/
+# if [ ! -d "$DRUPAL_SITE_DIR" ]
+# then
+#   cp -r $DRUPAL_INSTALL_DIR/sites.original $DRUPAL_SITE_DIR
+#   ln -sfn ../../sites $DRUPAL_INSTALL_DIR/sites
+# fi
+#
+# #
+# # Ensure that the app-root/runtime/repo/php PHP directory points
+# # to a valid Drupal instance directory
+# #
+# ln -sfn ../../data/downloads/current ${OPENSHIFT_REPO_DIR}php
+# if [ ! -d "${OPENSHIFT_REPO_DIR}php" ]
+# then
+#   echo "ERROR: Unable to link the PHP directory, as the current Drupal instance is not a valid directory."
+#   exit 8
+# fi
