@@ -6,7 +6,7 @@
 
 set -e
 
-export CUSTOM_REPO_SLUG="helior/onAIr"
+export CUSTOM_REPO_SLUG="helior/onAir"
 export CUSTOM_TAR_NAME="onAir.tar.gz"
 
 export DRUPAL_SETTINGS="${OPENSHIFT_DATA_DIR}settings.local.php"
@@ -50,7 +50,7 @@ if [ ! -f $DRUPAL_SETTINGS ]; then
 
   touch ${DRUPAL_SETTINGS}
   cat << "END" > "${OPENSHIFT_TMP_DIR}/settings.local.php"
-
+<?php
 /**
  * For maximum portability, use the OpenShift environment variables.
  */
@@ -101,7 +101,9 @@ if [ -z ${CUSTOM_DEPLOY_TAG+x} ]; then
 fi
 
 if [ -d "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}" ]; then
+  CUSTOM_CURRENT_INSTALL_DIR=$(readlink -f ${OPENSHIFT_DATA_DIR}downloads/current)
   echo "NOTICE: Version ${CUSTOM_DEPLOY_TAG} has already been downloaded."
+  echo "NOTICE: Drupal is currently installed at $CUSTOM_CURRENT_INSTALL_DIR"
 else
   echo "Downloading ${CUSTOM_DEPLOY_TAG}..."
   CUSTOM_DEPLOY_DOWNLOAD_URL="https://github.com/${CUSTOM_REPO_SLUG}/releases/download/${CUSTOM_DEPLOY_TAG}/${CUSTOM_TAR_NAME}"
@@ -113,23 +115,34 @@ else
     exit 7
   fi
 
-  mkdir -p "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
-
-  echo "Moving downloaded artifact to ${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}..."
-  tar xpf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+  CUSTOM_CURRENT_DEPLOY_PATH="${OPENSHIFT_DATA_DIR}downloads/${CUSTOM_DEPLOY_TAG}"
+  echo "Moving downloaded artifact to ${CUSTOM_CURRENT_DEPLOY_PATH}..."
+  mkdir -p "${CUSTOM_CURRENT_DEPLOY_PATH}"
+  tar xpf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${CUSTOM_CURRENT_DEPLOY_PATH}" --strip-components 1
   rm -rf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME"
+
+  # Modify artifact for OpenShift.
+  echo "Adding files and configurations to current deployment..."
+
+  # Drush settings
+  echo "\$options['uri'] = \$_ENV['OPENSHIFT_APP_DNS'];" >> "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/all/drush/drushrc.php"
+  echo "\$options['root'] = \$_ENV['OPENSHIFT_REPO_DIR'].'php';" >> "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/all/drush/drushrc.php"
+
+  # Health check
+  cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${CUSTOM_CURRENT_DEPLOY_PATH}
+
+  # Settings
+  ln -sfn ${DRUPAL_SETTINGS} "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/default/settings/settings.local.php"
+
+  # Files
+  ln -sfn ${DRUPAL_FILES_DIR} "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/default/files"
 fi
 
+# TODO: Symbolic link deployed artifact to current
+#-----------------------------------------------------------------------
 DRUPAL_SITE_DIR=${OPENSHIFT_DATA_DIR}sites
 
 echo
-
-# Drush settings
-cat >$OPENSHIFT_HOMEDIR/.drush/drushrc.php <<EOF
-<?php
-  \$options['uri'] = \$_ENV['OPENSHIFT_APP_DNS'];
-  \$options['root'] = \$_ENV['OPENSHIFT_REPO_DIR'].'php';
-EOF
 
 #
 # If there is no current download of Drupal, create one.
@@ -161,9 +174,8 @@ then
   #
   # Ensure there is a default health check
   #
-  cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${DRUPAL_INSTALL_DIR}
-
-  patch ${DRUPAL_INSTALL_DIR}/.htaccess < ${OPENSHIFT_REPO_DIR}.openshift/.htaccess.patch
+  # cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${DRUPAL_INSTALL_DIR}
+  # patch ${DRUPAL_INSTALL_DIR}/.htaccess < ${OPENSHIFT_REPO_DIR}.openshift/.htaccess.patch
 
   echo "Drupal installed to $DRUPAL_INSTALL_DIR"
 else
