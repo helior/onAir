@@ -47,8 +47,9 @@ function onair_feed_theme($existing, $type, $theme, $path) {
 function onair_feed_feed_url($entity) {
   $podcast = entity_metadata_wrapper('node', $entity);
 
-  if (!empty($podcast->field_name->value())) {
-    $path = "feed/{$podcast->field_name->value()['machine']}/rss.xml";
+  $field_name = $podcast->field_name->value();
+  if (!empty($field_name)) {
+    $path = "feed/$field_name['machine']/rss.xml";
     return url($path, array('absolute' => TRUE));
   }
 }
