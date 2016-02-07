@@ -49,7 +49,7 @@ function onair_feed_feed_url($entity) {
 
   $field_name = $podcast->field_name->value();
   if (!empty($field_name)) {
-    $path = "feed/$field_name['machine']/rss.xml";
+    $path = "feed/{$field_name['machine']}/rss.xml";
     return url($path, array('absolute' => TRUE));
   }
 }
