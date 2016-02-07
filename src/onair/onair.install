@@ -11,7 +11,8 @@ function onair_install() {
     'onair_network_ui',
     'onair_podcast_ui',
     'onair_user_ui',
-
+    'onair_feed',
+    
     // Development
     'field_ui'
   ));
