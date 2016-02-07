@@ -18,9 +18,7 @@ Via Openshift [(More info on deploying with Openshift)](https://developers.opens
 
 
 ###### TODO:
-- Fix PHP 5.4 errors
 - Get install profile to install starter modules
-- Add HAP to manifest
 - Make sure deploying the same release tag exits gracefully.
 - Run post-deploy steps for Drupal
 - Automate DB backup pre-deploy

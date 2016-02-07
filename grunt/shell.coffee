@@ -3,7 +3,7 @@ module.exports =
     command: 'drush make --no-core --contrib-destination=. --yes onair.make'
     options:
       execOptions:
-        cwd: 'src/onAir'
+        cwd: 'src/onair'
   install:
     command: 'drush si onair --account-name=admin --account-pass=admin --site-name=onAir -y'
     options:

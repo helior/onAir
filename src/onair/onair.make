@@ -11,6 +11,8 @@ projects[] = field_group
 projects[] = filefield_paths
 projects[] = file_entity
 projects[] = features
+projects[hap][download][branch] = 7.x-1.x
+projects[hap][download][revision] = 128657d
 projects[] = libraries
 projects[] = navbar
 projects[] = panels
@@ -23,7 +25,7 @@ projects[] = token
 projects[] = views
 
 projects[multifield][download][branch] = 7.x-1.x
-projects[multifield][download][revision] = 	1aaeaa
+projects[multifield][download][revision] = 1aaeaa
 projects[multifield][patch][2041531] = https://www.drupal.org/files/issues/2041531-23-entity-api-support.patch
 projects[multifield][patch][2546900] = https://www.drupal.org/files/issues/multifield-2546900-include-module-file-2.patch
 
