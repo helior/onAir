@@ -7,7 +7,7 @@
 
 ## Installation
 Running the following will 1) install dependencies 2) build artifact; install Drupal
-> #> make install; make build; make init
+> $> make install; make build; make init
 
 ## Deployment
 Via Openshift [(More info on deploying with Openshift)](https://developers.openshift.com/en/managing-deployments.html):
@@ -26,6 +26,8 @@ Via Openshift [(More info on deploying with Openshift)](https://developers.opens
 
 
 ###### TODO:
+- Configure essential variables on Install (S3, et al.)
+- Ensure admin user is also an editor on install
 - Make sure deploying the same release tag exits gracefully.
 - Run post-deploy steps for Drupal
 - Automate DB backup pre-deploy
