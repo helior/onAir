@@ -8,126 +8,62 @@ set -e
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-# DRUPAL_SITE_DIR=${OPENSHIFT_DATA_DIR}sites
-# DRUPAL_PRIVATE_DIR=${OPENSHIFT_DATA_DIR}private
-# DRUPAL_SETTINGS=${DRUPAL_SITE_DIR}/default/settings.php
+# Now that everything is in its right place, let's start managing deployment
+# artifacts. We'll keep artifacts in their own respective directory and
+# symbolically link the webroot with the desired release.
+#
+# We diverge a little from the way OpenShift does deployments for a couple of
+# reasons: first, OpenShift is not a great environment for creating builds – we
+# defer to Travis CI for that; secondly, we can't rely on the ref from
+# `rhc deploy <ref>` since for whatever reason, we don't know at run-time what
+# that ref is! So as a work around, we have the user define an environment
+# variable to determine which release tag we will download from the Github
+# Releases artifact server.
+#
+# First things first: Fail if the release tag has not been set.
+if [ -z ${RELEASE_TAG+x} ]; then
+  echo "ERROR: ENV variable RELEASE_TAG is not set!! We don't know what to deploy! Please set a valid release tag from Github by running:"  1>&2
+  echo "rhc env set RELEASE_TAG=v1.2.3 -a ${OPENSHIFT_APP_NAME}" 1>&2
+  exit 0
+fi
 
-# NOTE: possibly this won't work when it's a scaled build
-# if [ ! -d "${DRUPAL_SITE_DIR}/default" ]
-# then
-#   echo "No sites directory has been created, Drupal cannot be deployed"
-#   exit 9
-# fi
+if [ -d "${OPENSHIFT_DATA_DIR}downloads/${RELEASE_TAG}" ]; then
+  CUSTOM_CURRENT_INSTALL_DIR=$(readlink -f ${CUSTOM_WEBROOT})
+  echo "NOTICE: Version ${RELEASE_TAG} has already been downloaded."
+  echo "NOTICE: Drupal is currently installed at $CUSTOM_CURRENT_INSTALL_DIR"
+else
+  echo "Downloading ${RELEASE_TAG}..."
+  CUSTOM_DEPLOY_DOWNLOAD_URL="https://github.com/${CUSTOM_REPO_SLUG}/releases/download/${RELEASE_TAG}/${CUSTOM_TAR_NAME}"
 
-#
-# Create a new Drupal site.  You can delete your ${OPENSHIFT_DATA_DIR}sites
-# folder to run this step again.
-#
-# if [ ! -f "${DRUPAL_SITE_DIR}/default/settings.php" ]
-# then
-#
-#   # Set the initial password
-#   admin_pwd=$(generate_password)
-#
-#   #
-#   # Automatic installation only works with mysql.
-#   #
-#   if [ -z "$OPENSHIFT_MYSQL_DB_HOST" ]
-#   then
-#       echo 1>&2
-#       echo "Could not find mysql database. Please run:" 1>&2
-#       echo "rhc cartridge add mysql -a $OPENSHIFT_APP_NAME" 1>&2
-#       echo "then make a sample commit (add whitespace somewhere) and re-push" 1>&2
-#       echo 1>&2
-#   fi
-#
-#   if [ -z "$OPENSHIFT_MYSQL_DB_HOST" ]
-#   then
-#       exit 5
-#   fi
-#   if [ -z "$OPENSHIFT_MYSQL_DB_PORT" ]
-#   then
-#       exit 6
-#   fi
-#
-#   mkdir -p ${DRUPAL_SITE_DIR}/default
-#   mkdir -p ${DRUPAL_PRIVATE_DIR}
-#
-#   pushd ${OPENSHIFT_REPO_DIR}php
-#   echo
-#   echo "Creating a new Drupal site at ${DRUPAL_SITE_DIR}/default"
-#   echo
-#   if ! drush site-install standard --site-name=${OPENSHIFT_APP_NAME} --account-pass=$admin_pwd --db-url=mysql://$OPENSHIFT_MYSQL_DB_USERNAME:$OPENSHIFT_MYSQL_DB_PASSWORD@$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/$OPENSHIFT_APP_NAME --yes
-#   then
-#     echo "Unable to configure your Drupal installation"
-#     echo
-#     exit 10
-#   fi
-#
-#   #
-#   # Tweak settings.php to use the OpenShift environment variables instead of
-#   # the values passed to Drush.
-#   #
-#   chmod u+w ${DRUPAL_SETTINGS} ${DRUPAL_SITE_DIR}/default
-#   cat ${DRUPAL_SETTINGS} | ruby -e "puts STDIN.read.gsub(/\\\$databases\s*=\s*array.*?\)\;/m, '# Replaced by OpenShift')" > ${OPENSHIFT_TMP_DIR}/settings.php
-#   cat << "END" >> ${OPENSHIFT_TMP_DIR}/settings.php
-#
-# /**
-#  * For maximum portability, use the OpenShift environment variables.
-#  */
-#
-# // When run from Drush, only $_ENV is available.  Might be a bug
-# if (array_key_exists('OPENSHIFT_APP_NAME', $_SERVER)) {
-#   $src = $_SERVER;
-# } else {
-#   $src = $_ENV;
-# }
-# $databases = array (
-#   'default' =>
-#   array (
-#     'default' =>
-#     array (
-#       'database' => $src['OPENSHIFT_APP_NAME'],
-#       'username' => $src['OPENSHIFT_MYSQL_DB_USERNAME'],
-#       'password' => $src['OPENSHIFT_MYSQL_DB_PASSWORD'],
-#       'host' => $src['OPENSHIFT_MYSQL_DB_HOST'],
-#       'port' => $src['OPENSHIFT_MYSQL_DB_PORT'],
-#       'driver' => 'mysql',
-#       'prefix' => '',
-#     ),
-#   ),
-# );
-# END
-#   cat ${OPENSHIFT_TMP_DIR}/settings.php > ${DRUPAL_SETTINGS}
-#
-#   #
-#   # Set a base_url with correct scheme, based on the current request. This is
-#   # used for internal links to stylesheets and javascript.
-#   #
-#   echo "\$scheme = !empty(\$src['HTTPS']) ? 'https' : 'http';" >> ${DRUPAL_SETTINGS}
-#   echo "\$base_url = \$scheme . '://' . \$src['HTTP_HOST'];" >> ${DRUPAL_SETTINGS}
-#
-#   #
-#   # Use the temporary directories that OpenShift provides, and set
-#   # the private path to be inside the data dir
-#   #
-#   echo "\$conf['file_private_path'] = \$src['OPENSHIFT_DATA_DIR'] . 'private/';" >> ${DRUPAL_SETTINGS}
-#   echo "\$conf['file_temporary_path'] = \$src['OPENSHIFT_TMP_DIR'] . 'drupal/';" >> ${DRUPAL_SETTINGS}
-#
-#   popd
-#   echo
-#   echo "Drupal is now configured"
-#   echo
-#
-#   client_result ""
-#   client_result "Drupal installed successfully."
-#   client_result ""
-#   client_result "      Drupal admin login: admin"
-#   client_result "   Drupal admin password: $admin_pwd"
-#   client_result ""
-#   client_result "Don't forget to change your drupal admin password!"
-#
-# else
-#   echo "Drupal is already configured.  Delete settings.php to rerun setup"
-# fi
-# echo
+  wget $CUSTOM_DEPLOY_DOWNLOAD_URL --directory-prefix=${OPENSHIFT_TMP_DIR}
+
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Could not download '${CUSTOM_DEPLOY_DOWNLOAD_URL}'; please make sure this release exists."
+    exit 7
+  fi
+
+  CUSTOM_CURRENT_DEPLOY_PATH="${OPENSHIFT_DATA_DIR}downloads/${RELEASE_TAG}"
+  echo "Moving downloaded artifact to ${CUSTOM_CURRENT_DEPLOY_PATH}..."
+  mkdir -p "${CUSTOM_CURRENT_DEPLOY_PATH}"
+  tar xpf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME" -C "${CUSTOM_CURRENT_DEPLOY_PATH}" --strip-components 1
+  rm -rf "${OPENSHIFT_TMP_DIR}/$CUSTOM_TAR_NAME"
+
+  # Modify artifact for OpenShift.
+  echo "Adding files and configurations to current deployment..."
+
+  # Drush settings
+  echo "\$options['uri'] = \$_ENV['OPENSHIFT_APP_DNS'];" >> "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/all/drush/drushrc.php"
+  echo "\$options['root'] = \$_ENV['OPENSHIFT_REPO_DIR'].'php';" >> "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/all/drush/drushrc.php"
+
+  # Health check
+  cp ${OPENSHIFT_REPO_DIR}.openshift/health_check.php ${CUSTOM_CURRENT_DEPLOY_PATH}
+
+  # Settings
+  ln -sfn ${DRUPAL_SETTINGS} "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/default/settings/settings.local.php"
+
+  # Files
+  ln -sfn ${DRUPAL_FILES_DIR} "${CUSTOM_CURRENT_DEPLOY_PATH}/sites/default/files"
+fi
+
+# TODO: Do not attempt symlink if there are no changes to the source
+ln -sfn $CUSTOM_CURRENT_DEPLOY_PATH $CUSTOM_WEBROOT
