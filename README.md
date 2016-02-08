@@ -6,8 +6,22 @@
 - NPM/Node.js
 
 ## Installation
-Running the following will 1) install dependencies 2) build artifact 3) install Drupal
+Assuming you have a database ready to use, and a webserver using `[project path]/docroot` as the docroot.
+
+Running the following will:
+  1. Install dependencies
+    - Installs Grunt CLI
+    - Installs NPM dev dependencies
+    - Installs Drush
+  2. Build artifact
+    - Downloads application run-time dependencies
+    - Builds installable artifact into a `docroot` directory
+  3. Install Drupal
+    - Uses drush to install onAir locally.
+
 > $> make install; make build; make init
+
+Finally, create a local settings file under `[project path]/docroot/sites/default/settings/settings.local.inc` and add your DB credentials.
 
 ## Deployment
 Via Openshift [(More info on deploying with Openshift)](https://developers.openshift.com/en/managing-deployments.html):
