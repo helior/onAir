@@ -27,7 +27,6 @@ projects[] = safeword
 projects[] = strongarm
 projects[] = token
 projects[] = views
-projects[views_rss_itunes][download][branch] = 7.x-1.x
 
 ; Contrib Themes
 projects[] = ember

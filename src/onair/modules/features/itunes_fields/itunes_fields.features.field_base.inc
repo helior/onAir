@@ -352,7 +352,7 @@ function itunes_fields_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'views_rss_itunes_category' => 'views_rss_itunes_category',
+          'onair_itunes_category' => 'onair_itunes_category',
         ),
       ),
       'target_type' => 'taxonomy_term',
