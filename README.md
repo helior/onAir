@@ -18,6 +18,7 @@ Running the following will:
     - Builds installable artifact into a `docroot` directory
   3. Install Drupal
     - Uses drush to install onAir locally.
+
 > $> make install; make build; make init
 
 Finally, create a local settings file under `[project path]/docroot/sites/default/settings/settings.local.inc` and add your DB credentials.

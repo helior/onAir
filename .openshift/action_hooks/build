@@ -86,6 +86,12 @@ if (array_key_exists('OPENSHIFT_APP_NAME', \$_SERVER)) {
 \$base_url = \$scheme . '://' . \$src['HTTP_HOST'];
 \$conf['file_private_path'] = '${DRUPAL_PRIVATE_DIR}';
 \$conf['file_temporary_path'] = '${DRUPAL_TEMP_DIR}';
+\$conf['s3fs_awssdk2_access_key'] = \$src['ONAIR_AWS_ACCESS_KEY'];
+\$conf['s3fs_awssdk2_secret_key'] = \$src['ONAIR_AWS_SECRET_KEY'];
+\$conf['s3fs_region'] = \$src['ONAIR_AWS_REGION'];
+\$conf['s3fs_bucket'] = \$src['ONAIR_AWS_S3_BUCKET'];
+\$conf['s3fs_root_folder'] = \$src['ONAIR_AWS_S3_ROOT_FOLDER'];
+
 EOF
   cat "${OPENSHIFT_TMP_DIR}/settings.local.php" > ${DRUPAL_SETTINGS}
   rm -rf "${OPENSHIFT_TMP_DIR}/settings.local.php"
