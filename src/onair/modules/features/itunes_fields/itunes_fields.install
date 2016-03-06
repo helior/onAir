@@ -27,8 +27,8 @@ function _itunes_fields_create_category_taxonomy() {
   $exists = FALSE;
   $vocabularies = taxonomy_get_vocabularies();
   foreach ($vocabularies as $vocabulary) {
-    if ($vocabulary->machine_name == 'views_rss_itunes_category') {
-      variable_set('views_rss_itunes_category_vid', $vocabulary->vid);
+    if ($vocabulary->machine_name == 'onair_itunes_category') {
+      variable_set('itunes_fields_category_vid', $vocabulary->vid);
       $exists = TRUE;
     }
   }
@@ -37,11 +37,11 @@ function _itunes_fields_create_category_taxonomy() {
     // Create "iTunes Category" vocabulary.
     $vocabulary = (object) array(
       'name' => 'iTunes Category',
-      'machine_name' => 'views_rss_itunes_category',
+      'machine_name' => 'onair_itunes_category',
       'module' => 'views_rss_itunes',
     );
     $ret = taxonomy_vocabulary_save($vocabulary);
-    variable_set('views_rss_itunes_category_vid', $vocabulary->vid);
+    variable_set('itunes_fields_category_vid', $vocabulary->vid);
 
     // Create main iTunes categories as first-level terms.
     $first_level_terms = array(
@@ -203,4 +203,8 @@ function _itunes_fields_create_category_taxonomy() {
       }
     }
   }
+}
+
+function itunes_fields_uninstall() {
+  variable_del('itunes_fields_category_vid');
 }
