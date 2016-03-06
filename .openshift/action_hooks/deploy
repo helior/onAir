@@ -6,6 +6,16 @@
 
 set -e
 
+export CUSTOM_REPO_SLUG="helior/onAir"
+export CUSTOM_TAR_NAME="onAir.tar.gz"
+export CUSTOM_WEBROOT="${OPENSHIFT_REPO_DIR}php"
+
+export DRUPAL_SETTINGS="${OPENSHIFT_DATA_DIR}settings.local.php"
+export DRUPAL_FILES_DIR="${OPENSHIFT_DATA_DIR}files"
+export DRUPAL_PRIVATE_DIR="${OPENSHIFT_DATA_DIR}private"
+export DRUPAL_TEMP_DIR="${OPENSHIFT_TMP_DIR}drupal"
+
+
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 # Now that everything is in its right place, let's start managing deployment
