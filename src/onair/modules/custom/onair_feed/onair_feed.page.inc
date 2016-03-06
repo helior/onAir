@@ -19,12 +19,16 @@
    }
 
    $output = theme('onair_feed_rss', array('podcast' => $podcast));
-   $output = tidy_repair_string($output, array(
-     'output-xml' => true,
-     'input-xml' => true,
-     'indent' => true,
-     'wrap' => 0,
-   ));
+
+   if (function_exists(tidy_repair_string)) {
+     $output = tidy_repair_string($output, array(
+       'output-xml' => true,
+       'input-xml' => true,
+       'indent' => true,
+       'wrap' => 0,
+     ));
+   }
+
    print $output;
    drupal_page_footer();
    exit;

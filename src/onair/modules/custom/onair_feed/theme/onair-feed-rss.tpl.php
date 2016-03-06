@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 
   <?php if ($podcast): ?>
@@ -40,7 +39,7 @@
 
     <?php if (!empty($podcast_itunes_owner)): ?>
       <itunes:owner>
-        <?php if (!empty($podcast_itunes_owner_name): ?>
+        <?php if (!empty($podcast_itunes_owner_name)): ?>
           <itunes:name><?php print $podcast_itunes_owner_name; ?></itunes:name>
         <?php endif; ?>
         <?php if (!empty($podcast_itunes_owner_name)): ?>
@@ -67,7 +66,7 @@
 
     <?php foreach ($episodes as $episode): ?>
       <item>
-        <pubDate><?php print date('D, j M Y h:i:s e', $episode->created->value()); ?></pubDate>
+        <pubDate><?php print date('D, j M Y h:i:s e', $episode['episode']->created->value()); ?></pubDate>
 
         <?php if (!empty($episode['title'])): ?>
           <title><?php print $episode['title']; ?></title>
