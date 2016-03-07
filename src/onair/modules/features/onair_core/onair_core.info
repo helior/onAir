@@ -19,4 +19,7 @@ features[user_permission][] = view files
 features[user_permission][] = view own unpublished content
 features[user_role][] = Editor
 features[variable][] = site_frontpage
+features[variable][] = user_mail_register_admin_created_body
+features[variable][] = user_mail_register_admin_created_subject
+features[variable][] = user_register
 project path = profiles/onAir/modules/features
