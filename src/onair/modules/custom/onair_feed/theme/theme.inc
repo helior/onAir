@@ -64,6 +64,7 @@ function template_preprocess_onair_feed_rss(&$vars) {
     ->entityCondition('entity_type', $entity_type)
     ->entityCondition('bundle', 'episode')
     ->propertyCondition('status', TRUE)
+    ->propertyOrderBy('created', 'DESC')
     ->fieldCondition('field_ref_podcast', 'target_id', $podcast->nid->value());
 
   $results = $query->execute();
@@ -82,5 +83,10 @@ function template_preprocess_onair_feed_rss(&$vars) {
       $vars['episodes'][$result->nid]['itunes_is_closed_caption'] = $episode->field_itunes_is_closed_caption->value();
       $vars['episodes'][$result->nid]['itunes_order'] = $episode->field_itunes_order->value();
     }
+  }
+
+  if (!empty($vars['episodes'])) {
+    $first_episode = reset($vars['episodes']);
+    $vars['podcast_pubdate'] = date('D, d M Y h:i:s O', $first_episode['episode']->created->value());
   }
 }

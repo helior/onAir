@@ -4,6 +4,10 @@
   <channel>
     <language>en-us</language>
 
+    <?php if (!empty($podcast_pubdate)):?>
+      <pubDate><?php print $podcast_pubdate;?></pubDate>
+    <?php endif; ?>
+
     <?php if (!empty($podcast_title)):?>
       <title><?php print $podcast_title;?></title>
     <?php endif; ?>
@@ -66,7 +70,7 @@
 
     <?php foreach ($episodes as $episode): ?>
       <item>
-        <pubDate><?php print date('D, j M Y h:i:s e', $episode['episode']->created->value()); ?></pubDate>
+        <pubDate><?php print date('D, d M Y h:i:s O', $episode['episode']->created->value()); ?></pubDate>
 
         <?php if (!empty($episode['title'])): ?>
           <title><?php print $episode['title']; ?></title>
