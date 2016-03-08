@@ -20,7 +20,7 @@
 
    $output = theme('onair_feed_rss', array('podcast' => $podcast));
 
-   if (function_exists(tidy_repair_string)) {
+   if (function_exists('tidy_repair_string')) {
      $output = tidy_repair_string($output, array(
        'output-xml' => true,
        'input-xml' => true,
